@@ -116,7 +116,7 @@ Universe V1 = all ISINs present in the panel on session T (Phase-1 F&O filter wi
 
 1. ✅ Planned backlog (25 features) implemented  
 2. ✅ Label Generation ADR + H=5 pipeline (E2E **APPROVED**)  
-3. ⏭️ Modeling ADR proposal (docs) → then model implementation  
+3. ✅ Modeling ADR Finalized → ⏭️ PICK A implementation  
 4. Promote stable features `experimental` → `candidate` → `production`  
 5. Wire Phase-1 universe into CS features
 

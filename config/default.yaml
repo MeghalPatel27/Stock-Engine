@@ -26,6 +26,30 @@ output:
   top_n_longs: 20
   top_n_shorts: 20
 
+modeling:
+  horizon: 5
+  risk_weight: 1.0
+  embargo_sessions: 5
+  min_train_sessions: 60
+  test_fold_sessions: 21
+  step_sessions: 21
+  top_k: 20
+  # Until features are promoted, research/paper may use experimental allow-list
+  require_production_features: false
+  model_name: cs_quantile_h5
+  model_version: v1
+  feature_set: core
+  feature_version: v1
+  label_set: core
+  label_version: v1
+  random_seed: 42
+  # Conservative HGB defaults (research may override)
+  learning_rate: 0.05
+  max_depth: 4
+  max_leaf_nodes: 31
+  min_samples_leaf: 20
+  l2_regularization: 1.0
+
 paths:
   data_root: data
 

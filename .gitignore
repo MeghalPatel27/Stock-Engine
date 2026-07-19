@@ -24,12 +24,15 @@ data/raw/**
 data/clean/**
 data/features/**
 data/labels/**
+data/models/**
 data/metadata/**
 !data/raw/.gitkeep
 !data/clean/.gitkeep
 !data/features/.gitkeep
 !data/labels/.gitkeep
+!data/models/.gitkeep
 !data/metadata/.gitkeep
+research/artifacts/**
 
 # OS / IDE
 .DS_Store

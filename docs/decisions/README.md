@@ -9,6 +9,6 @@
 | 04 | Phase 3 — Cleaning & CA | Finalized + cleaning **APPROVED** | [04-phase3.md](04-phase3.md) · [review](04-cleaning-review.md) |
 | 05 | Feature registry & feature store | Finalized + framework APPROVED | [05-feature-registry.md](05-feature-registry.md) |
 | 06 | Label generation | **Finalized** + E2E **APPROVED** | [06-label-generation.md](06-label-generation.md) · [review](../reviews/adr06-label-pipeline-review-packet.md) |
-| 07 | Modeling | **Proposed** (docs only) | [07-phase-modeling-proposal.md](07-phase-modeling-proposal.md) |
+| 07 | Modeling | **Finalized** (PICK A) | [07-modeling.md](07-modeling.md) |
 
-**Current gate:** Sign off [Modeling ADR proposal](07-phase-modeling-proposal.md). **Do not implement training** until Finalized.
+**Current gate:** Implement Modeling **PICK A** (train join + purged WF + freeze + RankRow scorer). No backtest/serving yet.
