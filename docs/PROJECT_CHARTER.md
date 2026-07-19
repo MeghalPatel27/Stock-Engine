@@ -1,38 +1,37 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19
-**Status:** Pre-implementation — philosophy finalized; Phase 1 design proposed (awaiting sign-off); no code built yet
+**Status:** Pre-implementation — Philosophy + Phase 1 finalized; Phase 0 proposal awaiting sign-off; no production code yet
 
 ---
 
 ## 1. Goals of the Engine
 
 **Primary objective**
-Every day, after Indian market close, analyze a curated universe of large-cap liquid F&O stocks and rank them by probability of outperforming in the near future.
+Every day, after Indian market close, analyze a curated universe of liquid F&O stocks and **rank** them by probability of **cross-sectional outperformance** within that universe (not vs Nifty 50).
 
-**Output per stock (per run)**
-- Bullish probability
-- Bearish probability
-- Risk score
-- Confidence score
-- Rank within the daily opportunity list
+**Output per stock (per run, per horizon)**
+- `p_bullish`, `p_bearish`, optional `p_neutral`
+- Risk score, confidence score (confidence ≠ directional probability)
+- `rank_long`, `rank_short`
+- Published lists: Top 20 Longs, Top 20 Shorts (config defaults)
 
-**Prediction horizons (tentative)**
-- Next trading day
-- 5 trading days
-- 20 trading days
+**Prediction horizons**
+- **V1 primary:** 5 trading days
+- Later (separate ranks, no blend): 1 day, 20 days
 
 **What this system is NOT**
 - Not HFT, not real-time / intraday trading
 - No live exchange feed dependency
 - Not built on illiquid, penny, or manipulated smallcap names
+- Not an index-forecasting engine
 
 **Operating constraints**
 - Data is mostly T-1 (end-of-day)
-- Primarily free / publicly available Indian market data
+- Prefer free / publicly available Indian market data; ≤ ₹2–5k/month if paid tools needed
 - Built and maintained by a 1–2 person team
-- Low budget
-- Must be production-quality eventually, but must avoid premature overengineering in V1
+- Local-first; cloud later only if necessary
+- Production-quality eventually, but avoid premature overengineering in V1
 
 **High-level workflow**
 ```
@@ -49,6 +48,7 @@ Data Collection → Data Cleaning → Feature Engineering → Regime Detection
 - No architectural, technology, or schema decisions are made unilaterally — ambiguity is always surfaced as a question before proceeding.
 - Work proceeds one layer at a time; each layer is finalized before moving to the next.
 - Bad or suboptimal proposals are challenged with tradeoffs, not silently implemented.
+- Every finalized decision is recorded as an **ADR** under `docs/decisions/`.
 
 ### 2.2 System philosophy — **P3-leaning hybrid architecture for V1**, with **P2 (modular multi-signal + learned meta-ranking) as the deliberate long-term target**.
 
@@ -67,7 +67,9 @@ These exist specifically to prevent the hybrid approach from becoming a dead-end
 2. **Point-in-time correctness** in data and features from day one (no lookahead leakage, ever).
 3. **Pluggable combiner** — rule-based weighting and learned stacking are two interchangeable implementations behind one interface.
 4. **Backtest harness from V1** that measures per-signal contribution (out-of-sample IC / predictive value), so we know which signals eventually deserve ML investment.
-5. **Research/production code separation** from the start.
+5. **Research/production code separation** from the start (`research/` vs `src/`).
+
+**Related Phase 1 contract rule:** engine output fields are required; **do not** treat `p_bullish + p_bearish + p_neutral = 1` as an architectural invariant. Model implementations remain replaceable.
 
 ### 2.4 Technical debt V1 intentionally accepts
 - Hand-set (not learned) signal combination weights.
@@ -85,15 +87,16 @@ These exist specifically to prevent the hybrid approach from becoming a dead-end
 | Stage 2 | Multiple signals proven + sufficient overlapping history | Build OOF prediction store + nested/walk-forward validation; replace hand-set weights with a learned meta-combiner |
 | Stage 3 | Signal count grows | Add signal registry, full feature store, per-signal monitoring, regime as a gating layer, multi-horizon multi-task modeling |
 
+### 2.6 Phase 1 — Problem formulation (finalized)
+See [`docs/decisions/01-phase1.md`](decisions/01-phase1.md). Summary: cross-sectional outperform probability; ranking primary; close→close; 20/20/60 labels; weekly universe + configurable `adv_min` / `price_min`; Top 20 Longs/Shorts; 6-month paper trust gate with realistic costs.
+
 ---
 
 ## 3. Architecture Decision Roadmap (all phases identified so far)
 
-This is the full ordered list of decision phases for the project. **Only Phase "Philosophy" above is finalized.** Everything below is identified but not yet decided.
-
-- [x] **Philosophy** — P3-leaning hybrid for V1, P2 as target (finalized above)
-- [ ] **Phase 0 — Foundations & cross-cutting**: language/runtime, local vs cloud, repo structure, environment/reproducibility, build-vs-buy posture *(soft prefs recorded; not locked)*
-- [~] **Phase 1 — Problem formulation, universe & success criteria**: answers received; design proposal awaiting sign-off — see [`docs/decisions/01-phase1-proposal.md`](decisions/01-phase1-proposal.md)
+- [x] **Philosophy** — P3-leaning hybrid for V1, P2 as target — [00-philosophy.md](decisions/00-philosophy.md)
+- [x] **Phase 1 — Problem formulation** — [01-phase1.md](decisions/01-phase1.md)
+- [~] **Phase 0 — Foundations & cross-cutting** — proposal awaiting sign-off — [02-phase0-proposal.md](decisions/02-phase0-proposal.md)
 - [ ] **Phase 2 — Data sourcing & acquisition**: provider per data type, required history depth, daily data-availability timing, licensing/ToS constraints, vendor redundancy
 - [ ] **Phase 3 — Data storage & schema**: storage paradigm per layer, raw/clean/feature boundaries, partitioning, bitemporal/point-in-time storage, versioning, symbol/ISIN mapping
 - [ ] **Phase 4 — Ingestion pipeline, orchestration & data quality**: orchestration tooling, idempotency/backfill, trading calendar handling, data-quality gating, failure alerting
@@ -110,27 +113,25 @@ This is the full ordered list of decision phases for the project. **Only Phase "
 
 ## 4. Implementation Progress
 
-**Status: 0% code/infrastructure built.** All work so far has been architectural decision-making. This is expected and correct at this stage — no premature building.
+**Status: 0% production code.** Architecture docs only — correct for this stage.
 
 **Done:**
-- Project goals, constraints, and non-goals defined
-- Three architecture paradigms formally compared across 6 axes
-- V1 philosophy decided (hybrid/P3) with invariants, debt policy, and V1→V2 migration path
-- Full decision-phase roadmap identified and ordered
-- Phase 1 clarifying questions answered; design proposal written
+- Philosophy ADR
+- Phase 1 ADR (finalized with sign-off amendments)
+- Phase 0 architecture proposal written
 
 **In progress:**
-- Phase 1 sign-off on [`docs/decisions/01-phase1-proposal.md`](decisions/01-phase1-proposal.md)
+- Phase 0 sign-off — [`docs/decisions/02-phase0-proposal.md`](decisions/02-phase0-proposal.md)
 
-**Not started:** Phase 0 lock, Phases 2–12, all code/infra/data.
+**Not started:** Phase 2+, scaffolding (until Phase 0 approved), data, models.
 
 ---
 
 ## 5. What's Left
 
-1. **Sign off Phase 1** (blocking): modeling objective, definitions, universe defaults, success bar — checklist at end of the proposal doc.
-2. **Phase 0 — Foundations**: stack/repo/reproducibility (Python + local-first already soft-preferred).
-3. Then Phases 2 → 12 in order, one at a time.
+1. **Sign off Phase 0** (blocking).
+2. Then either minimal scaffold (if approved in Phase 0 §15) or Phase 2 design first.
+3. Phases 2 → 12 in order.
 
 No phase should be skipped or batched ahead of schedule.
 
@@ -138,8 +139,8 @@ No phase should be skipped or batched ahead of schedule.
 
 ## 6. What's Needed From You
 
-**Now:** Phase 1 sign-off (or requested changes) on the proposal checklist.
+**Now:** Phase 0 sign-off checklist at the end of [`docs/decisions/02-phase0-proposal.md`](decisions/02-phase0-proposal.md).
 
-Thereafter, per phase: definitions, data access, infra/budget, and explicit gate approval before the next phase.
+Thereafter: explicit gate approval before each next phase; ADRs for every lock.
 
-This document will be updated after each phase is finalized, so it always reflects the current source of truth for the project.
+This document will be updated after each phase is finalized.
