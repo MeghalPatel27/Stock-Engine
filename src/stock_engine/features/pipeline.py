@@ -10,11 +10,12 @@ import pandas as pd
 
 from stock_engine.config import load_config_with_hash
 from stock_engine.features.compute import FEATURE_COMPUTERS, compute_feature
+from stock_engine.features.compute.context import ComputeContext
 from stock_engine.features.dag import validate_dag
-from stock_engine.features.inputs import load_l1_equity_eod
-from stock_engine.features.models import FeatureSetManifest
+from stock_engine.features.inputs import load_l1_equity_eod, load_open_sessions
+from stock_engine.features.models import FeatureSetManifest, FeatureSpec
 from stock_engine.features.publish import FeaturePublishRequest, publish_feature_frame
-from stock_engine.features.registry import default_registry_paths, load_registry
+from stock_engine.features.registry import FeatureRegistry, default_registry_paths, load_registry
 from stock_engine.logging_utils import configure_logging
 
 
@@ -40,18 +41,46 @@ def _merge_feature_frames(frames: list[pd.DataFrame]) -> pd.DataFrame:
     return out.sort_values(["isin", "session_date"]).reset_index(drop=True)
 
 
+def _normalize_feature_dep(dep: str, registry: FeatureRegistry) -> str:
+    if "@" in dep:
+        return dep
+    spec = registry.get(dep)
+    return spec.feature_id
+
+
+def expand_feature_ids(registry: FeatureRegistry, requested: list[str]) -> list[FeatureSpec]:
+    """Include transitive feature: dependencies, then return topo-sorted specs."""
+    needed: set[str] = set()
+    stack = list(requested)
+    while stack:
+        fid = stack.pop()
+        if fid in needed:
+            continue
+        name, ver = fid.split("@", 1)
+        spec = registry.get(name, ver)
+        needed.add(spec.feature_id)
+        for dep in spec.feature_deps():
+            dep_id = _normalize_feature_dep(dep, registry)
+            if dep_id not in needed:
+                stack.append(dep_id)
+
+    specs = [registry.get(*fid.split("@", 1)) for fid in needed]
+    order = validate_dag(specs).topological_order()
+    return [registry.get(*fid.split("@", 1)) for fid in order]
+
+
 def run_feature_publish(
     *,
     data_root: Path | None = None,
     as_of_date: date,
     feature_ids: list[str] | None = None,
-    feature_set: str = "core_raw",
+    feature_set: str = "core",
     feature_version: str = "v1",
     config_dir: Path | None = None,
     repo_root: Path | None = None,
 ) -> FeatureRunResult:
     """
-    Load L1 → compute registered features → validate → publish Parquet + manifest.
+    Load L1 → compute registered features (DAG order) → validate → publish.
     """
     cfg, config_version, cfg_hash = load_config_with_hash(config_dir)
     root = data_root or Path(cfg.get("paths", {}).get("data_root", "data"))
@@ -80,7 +109,6 @@ def run_feature_publish(
         )
 
     if feature_ids is None:
-        # Default: features that have registered computers
         feature_ids = [
             fid for fid in FEATURE_COMPUTERS if fid in {f.feature_id for f in registry.all()}
         ]
@@ -95,13 +123,8 @@ def run_feature_publish(
         )
 
     try:
-        specs = []
-        for fid in feature_ids:
-            name, ver = fid.split("@", 1)
-            specs.append(registry.get(name, ver))
-        ordered_ids = [
-            fid for fid in validate_dag(specs).topological_order() if fid in set(feature_ids)
-        ]
+        ordered_specs = expand_feature_ids(registry, feature_ids)
+        ordered_ids = [s.feature_id for s in ordered_specs]
     except (KeyError, ValueError) as exc:
         return FeatureRunResult(
             run_id=run_id,
@@ -113,8 +136,21 @@ def run_feature_publish(
             errors=[f"dag: {exc}"],
         )
 
+    missing_computers = [fid for fid in ordered_ids if fid not in FEATURE_COMPUTERS]
+    if missing_computers:
+        return FeatureRunResult(
+            run_id=run_id,
+            as_of_date=as_of_date,
+            config_version=config_version,
+            config_hash=cfg_hash,
+            status="failed",
+            feature_ids=ordered_ids,
+            errors=[f"no computer for {fid}" for fid in missing_computers],
+        )
+
     try:
         l1 = load_l1_equity_eod(clean_root, as_of_date)
+        sessions = load_open_sessions(clean_root, as_of_date)
     except (OSError, ValueError) as exc:
         return FeatureRunResult(
             run_id=run_id,
@@ -123,16 +159,21 @@ def run_feature_publish(
             config_hash=cfg_hash,
             status="failed",
             feature_ids=ordered_ids,
-            errors=[f"l1: {exc}"],
+            errors=[f"inputs: {exc}"],
         )
 
+    ctx = ComputeContext(
+        as_of_date=as_of_date,
+        l1_equity=l1,
+        open_sessions=sessions,
+    )
     frames: list[pd.DataFrame] = []
     errors: list[str] = []
-    for fid in ordered_ids:
+    for spec in ordered_specs:
         try:
-            name, ver = fid.split("@", 1)
-            spec = registry.get(name, ver)
-            frames.append(compute_feature(fid, l1_equity=l1, as_of_date=as_of_date, spec=spec))
+            frame = compute_feature(spec.feature_id, ctx=ctx, spec=spec)
+            ctx.features[spec.feature_id] = frame
+            frames.append(frame)
         except (KeyError, ValueError) as exc:
             errors.append(str(exc))
 

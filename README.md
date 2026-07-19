@@ -1,6 +1,6 @@
 # Stock Intelligence Engine
 
-**Status:** Building first feature `raw__close_adj__l1` (raw L1 projection). Not RSI/MACD yet.
+**Status:** Building `mom__ret__1d` (1-session return). Not RSI/MACD yet.
 
 ## Docs
 
@@ -14,7 +14,7 @@
 
 ## Current gate
 
-Ship `raw__close_adj__l1` end-to-end (registry → compute → publish).
+Ship `mom__ret__1d` (depends on `raw__close_adj__l1`).
 
 ## Quickstart
 

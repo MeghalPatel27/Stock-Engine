@@ -2,36 +2,31 @@
 
 from __future__ import annotations
 
-from datetime import date
-
 import pandas as pd
 
+from stock_engine.features.compute.context import ComputeContext
 from stock_engine.features.inputs import apply_pit_filter
 from stock_engine.features.models import FeatureSpec
 
 REQUIRED_COLS = ("isin", "session_date", "close_adj")
 
 
-def compute_raw_close_adj_l1(
-    l1_equity: pd.DataFrame,
-    *,
-    as_of_date: date,
-    spec: FeatureSpec,
-) -> pd.DataFrame:
+def compute_raw_close_adj_l1(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
     """
     Project L1 ``close_adj`` into a feature column named ``spec.name``.
 
     PIT: only rows with session_date <= as_of_date.
     Fail-closed on missing columns or null/non-positive close_adj (null_policy=fail_run).
     """
+    l1_equity = ctx.l1_equity
     missing = [c for c in REQUIRED_COLS if c not in l1_equity.columns]
     if missing:
         msg = f"{spec.feature_id}: L1 missing columns {missing}"
         raise ValueError(msg)
 
-    src = apply_pit_filter(l1_equity, as_of_date)
+    src = apply_pit_filter(l1_equity, ctx.as_of_date)
     if src.empty:
-        msg = f"{spec.feature_id}: no L1 rows on or before {as_of_date.isoformat()}"
+        msg = f"{spec.feature_id}: no L1 rows on or before {ctx.as_of_date.isoformat()}"
         raise ValueError(msg)
 
     values = pd.to_numeric(src["close_adj"], errors="coerce")

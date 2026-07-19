@@ -29,8 +29,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--feature-set",
         type=str,
-        default="core_raw",
-        help="Feature set name for store path (default: core_raw)",
+        default="core",
+        help="Feature set name for store path (default: core)",
     )
     parser.add_argument(
         "--feature-version",

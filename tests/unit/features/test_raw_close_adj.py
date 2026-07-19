@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from stock_engine.features.compute.context import ComputeContext
 from stock_engine.features.compute.raw_close_adj import compute_raw_close_adj_l1
 from stock_engine.features.pipeline import run_feature_publish
 from stock_engine.features.registry import load_registry
@@ -36,6 +37,11 @@ def _stage_ingest(tmp_path: Path) -> Path:
     return root
 
 
+def _ctx(l1: pd.DataFrame, as_of: date) -> ComputeContext:
+    sessions = pd.DatetimeIndex(pd.to_datetime(l1["session_date"]).dt.normalize().unique())
+    return ComputeContext(as_of_date=as_of, l1_equity=l1, open_sessions=sessions)
+
+
 def test_compute_matches_l1_close_adj() -> None:
     registry = load_registry(
         REPO / "docs" / "features" / "registry",
@@ -51,7 +57,7 @@ def test_compute_matches_l1_close_adj() -> None:
             "close_raw": [100.0, 101.0, 50.0],
         }
     )
-    out = compute_raw_close_adj_l1(l1, as_of_date=date(2026, 7, 16), spec=spec)
+    out = compute_raw_close_adj_l1(_ctx(l1, date(2026, 7, 16)), spec)
     assert list(out.columns) == ["isin", "session_date", "raw__close_adj__l1"]
     assert len(out) == 3
     assert out["raw__close_adj__l1"].tolist() == [100.0, 101.0, 50.0]
@@ -71,7 +77,7 @@ def test_compute_pit_excludes_future_sessions() -> None:
             "close_adj": [100.0, 110.0],
         }
     )
-    out = compute_raw_close_adj_l1(l1, as_of_date=date(2026, 7, 15), spec=spec)
+    out = compute_raw_close_adj_l1(_ctx(l1, date(2026, 7, 15)), spec)
     assert len(out) == 1
     assert float(out["raw__close_adj__l1"].iloc[0]) == 100.0
 
@@ -89,7 +95,7 @@ def test_e2e_ingest_then_publish_feature(tmp_path: Path) -> None:
         data_root=root,
         as_of_date=published_as_of,
         feature_ids=["raw__close_adj__l1@v1"],
-        feature_set="core_raw",
+        feature_set="core",
         feature_version="v1",
         repo_root=REPO,
     )
@@ -100,7 +106,7 @@ def test_e2e_ingest_then_publish_feature(tmp_path: Path) -> None:
 
     store = LocalParquetFeatureStore(root / "features")
     got = store.read(
-        feature_set="core_raw",
+        feature_set="core",
         feature_version="v1",
         as_of_date=published_as_of.isoformat(),
     )
@@ -114,11 +120,6 @@ def test_e2e_ingest_then_publish_feature(tmp_path: Path) -> None:
     assert (merged["raw__close_adj__l1"] == merged["close_adj"]).all()
 
     meta = (
-        root
-        / "metadata"
-        / "features"
-        / "published"
-        / published_as_of.isoformat()
-        / "core_raw__v1.json"
+        root / "metadata" / "features" / "published" / published_as_of.isoformat() / "core__v1.json"
     )
     assert meta.exists()

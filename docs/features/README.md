@@ -23,11 +23,14 @@ CI runs this on every PR.
 
 | Feature id | Type | Notes |
 |---|---|---|
-| `raw__close_adj__l1@v1` | raw | L1 `close_adj` projection (first E2E feature) |
+| `raw__close_adj__l1@v1` | raw | L1 `close_adj` projection |
+| `mom__ret__1d@v1` | rolling | 1-session simple return; depends on raw close |
 
 ```bash
-# Requires published L1 for the same as-of partition
+# Requires published L1 (+ calendar) for the same as-of partition
 uv run stock-engine-publish-features --as-of YYYY-MM-DD
+# or only momentum (auto-includes upstream raw):
+uv run stock-engine-publish-features --as-of YYYY-MM-DD --feature-id mom__ret__1d@v1
 ```
 
 ## Rules (ADR-05)
