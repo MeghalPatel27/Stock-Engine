@@ -1,7 +1,8 @@
 # ADR 03 — Phase 2: Data Acquisition
 
-**Status:** Finalized  
+**Status:** Finalized (ingest implementation **approved** in review)  
 **Date locked:** 2026-07-19  
+**Review:** [03-ingest-review.md](03-ingest-review.md) — APPROVE; follow-ups R1–R5 → Phase 3  
 **Supersedes:** [03-phase2-proposal.md](03-phase2-proposal.md)  
 **Depends on:** [01-phase1.md](01-phase1.md), [02-phase0.md](02-phase0.md)
 
