@@ -2,7 +2,7 @@
 
 Daily post-close ranking of liquid Indian F&O equities by near-term cross-sectional outperformance probability.
 
-**Status:** Pre-implementation. Philosophy + Phase 1 finalized. Phase 0 architecture proposal awaiting sign-off.
+**Status:** Phase 0 scaffolded. Phase 1 + Phase 0 ADRs finalized. **Phase 2 data-acquisition design awaiting sign-off** — no ingestion implementation yet.
 
 ## Source of truth
 
@@ -11,8 +11,13 @@ Daily post-close ranking of liquid Indian F&O equities by near-term cross-sectio
 
 ## Current gate
 
-**Sign off Phase 0** → [`docs/decisions/02-phase0-proposal.md`](docs/decisions/02-phase0-proposal.md)
+Sign off **Phase 2**: [`docs/decisions/03-phase2-proposal.md`](docs/decisions/03-phase2-proposal.md)
 
-Phase 1 locked: [`docs/decisions/01-phase1.md`](docs/decisions/01-phase1.md)
+## Dev quickstart (local)
 
-No Phase 2 and no production pipelines until Phase 0 is approved.
+```bash
+uv sync --extra dev
+uv run pytest
+uv run ruff check src tests scripts
+uv run python scripts/bootstrap.py
+```

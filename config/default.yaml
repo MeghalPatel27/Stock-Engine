@@ -1,0 +1,18 @@
+config_version: "0.1.0"
+
+universe:
+  adv_min_inr_cr: 50
+  price_min_inr: 50
+  refresh: weekly
+
+labels:
+  top_quantile: 0.20
+  bottom_quantile: 0.20
+  horizon_primary: 5
+
+output:
+  top_n_longs: 20
+  top_n_shorts: 20
+
+paths:
+  data_root: data

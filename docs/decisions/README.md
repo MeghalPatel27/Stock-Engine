@@ -12,9 +12,8 @@ Working process:
 | ID | Phase | Status | Doc |
 |---|---|---|---|
 | 00 | Philosophy | Finalized | [00-philosophy.md](00-philosophy.md) |
-| 01 | Phase 1 — Problem formulation | **Finalized** | [01-phase1.md](01-phase1.md) · [proposal archive](01-phase1-proposal.md) · [early questions](01-phase1-questions.md) |
-| 02 | Phase 0 — Foundations | **Proposed — awaiting sign-off** | [02-phase0-proposal.md](02-phase0-proposal.md) |
-| — | Phase 2 — Data sourcing | Not started | — |
+| 01 | Phase 1 — Problem formulation | Finalized | [01-phase1.md](01-phase1.md) |
+| 02 | Phase 0 — Foundations | **Finalized** | [02-phase0.md](02-phase0.md) · [proposal archive](02-phase0-proposal.md) |
+| 03 | Phase 2 — Data acquisition | **Proposed — awaiting sign-off** | [03-phase2-proposal.md](03-phase2-proposal.md) |
 
-Answer archive: [`../QUESTIONS.md`](../QUESTIONS.md)  
 Charter: [`../PROJECT_CHARTER.md`](../PROJECT_CHARTER.md)
