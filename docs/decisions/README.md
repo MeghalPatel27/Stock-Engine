@@ -7,6 +7,7 @@
 | 02 | Phase 0 — Foundations | Finalized | [02-phase0.md](02-phase0.md) |
 | 03 | Phase 2 — Data acquisition | Finalized | [03-phase2.md](03-phase2.md) · [ingest review](03-ingest-review.md) |
 | 04 | Phase 3 — Cleaning & CA | Finalized + cleaning **APPROVED** | [04-phase3.md](04-phase3.md) · [review](04-cleaning-review.md) |
-| 05 | Feature registry & feature store | **Finalized + framework APPROVED** | [05-feature-registry.md](05-feature-registry.md) |
+| 05 | Feature registry & feature store | Finalized + framework APPROVED | [05-feature-registry.md](05-feature-registry.md) |
+| 06 | Label generation | **Proposed — awaiting sign-off** | [06-phase-label-generation-proposal.md](06-phase-label-generation-proposal.md) |
 
-**Current gate:** Feature backlog (25) on `main`. Next: **Label Generation ADR**.
+**Current gate:** Sign off ADR-06. **Do not implement labels/models** until finalized.

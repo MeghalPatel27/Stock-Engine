@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** V1 planned feature backlog implemented (25 features). Next: labels ADR.
+**Status:** Features on `main`. **ADR-06 Label Generation** proposed — awaiting sign-off.
 
 ## Progress
 
@@ -12,18 +12,16 @@
 | Phase 0 Foundations | ✅ |
 | Phase 2 Data acquisition | ✅ |
 | Phase 3 Cleaning & normalization | ✅ APPROVED |
-| ADR-05 Feature registry & store design | ✅ Finalized |
-| **Feature framework** (registry / DAG / store / publisher) | ✅ APPROVED (+ follow-ups) |
-| Feature backlog (raw/mom/trend/vol/liq/cs) | ✅ 25 features |
-| Label Generation ADR | ⏭️ next |
-| Labels → models → backtest → serve | ⛔ blocked |
+| ADR-05 Feature registry & store | ✅ |
+| Feature framework + backlog (25) | ✅ |
+| **Label Generation ADR** | ⏭️ **proposed** |
+| Label implementation | ⛔ blocked |
+| Modeling → backtest → serve | ⛔ blocked |
 
 ## Hard stop
 
-Do not implement RSI/MACD yet. Next architecture gate is **Label Generation ADR**.
+Do not implement label pipelines, models, or ranking until ADR-06 is finalized.
 
-## Next
+## Give reviewers next
 
-1. Review / promote features (experimental → candidate → production)  
-2. Label Generation ADR  
-3. Labels → modeling ADR
+`docs/decisions/06-phase-label-generation-proposal.md` — fill §15 checklist.
