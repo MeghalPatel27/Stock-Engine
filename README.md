@@ -1,20 +1,19 @@
 # Stock Intelligence Engine
 
-**Status:** V1 planned features implemented (25). Next: Label Generation ADR.
+**Status:** 25 features on `main`. Next: sign off **Label Generation** (ADR-06).
 
 ## Docs
 
 - [Charter](docs/PROJECT_CHARTER.md)
 - [ADRs](docs/decisions/)
-- [Feature registry notes](docs/features/)
+- [Feature backlog](docs/features/FEATURE_BACKLOG.md)
 - [Incoming CSV](docs/data/incoming.md)
 - [Data dictionary](docs/data/dictionary/)
-- [Data requirements vs public availability](docs/data/DATA_AVAILABILITY.md)
-- [Pilot 5 stocks — CSV templates & sources](docs/data/pilot_5_stocks/README.md)
+- [Pilot 5 stocks](docs/data/pilot_5_stocks/README.md)
 
 ## Current gate
 
-Review feature set, then **Label Generation ADR**.
+[`docs/decisions/06-phase-label-generation-proposal.md`](docs/decisions/06-phase-label-generation-proposal.md)
 
 ## Quickstart
 
