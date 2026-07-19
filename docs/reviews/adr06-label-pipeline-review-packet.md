@@ -1,8 +1,8 @@
 # ADR-06 Label Pipeline — Review Packet
 
 **Repo:** MeghalPatel27/Stock-Engine  
-**Status:** H=5 pipeline implemented + hardened. CI expected green on the hardening PR.  
-**Hard rule:** Do not begin model training until this E2E review passes.
+**Status:** **APPROVE** (E2E review 2026-07-19). Modeling ADR unblocked (docs only).  
+**Hard rule:** Do not begin model implementation until the Modeling ADR is reviewed and approved.
 
 ## Ask of reviewer
 
@@ -13,6 +13,17 @@
 3. Storage / versioning / fail-closed validation — Approve / Change  
    (Parquet layout, embedded quantiles, duplicate-key fail, no silent overwrite)
 4. Is H=5 PICK A complete enough to unblock the **Modeling ADR proposal** (docs only)?
+
+## Sign-off result
+
+| Section | Verdict |
+|---|---|
+| Label semantics | APPROVE |
+| PIT / leakage | APPROVE |
+| Storage / versioning / validation | APPROVE |
+| H=5 completeness | APPROVE |
+| **Overall** | **APPROVE** |
+| Unblock Modeling ADR (docs)? | **YES** |
 
 ## Sign-off amendments already locked
 
@@ -43,30 +54,6 @@ Also present: `sample_weight` (default 1.0), `label_source` (`price_return_v1`),
 | Docs | `docs/labels/README.md` |
 | Unit + E2E | `tests/unit/labels/` + `tests/fixtures/labels/incoming/` |
 
-## E2E evidence to check
+## Next
 
-```bash
-uv sync --extra dev
-uv run pytest tests/unit/labels/ -q
-# With published L1 for a real as-of:
-uv run stock-engine-publish-labels --as-of YYYY-MM-DD --overwrite
-```
-
-Dedicated fixtures (`tests/fixtures/labels/incoming/`): 5 ISINs × 6 sessions → non-empty H=5 panel with 1 bullish / 1 bearish / 3 neutral per labeled session under `floor` + 20%/20%.
-
-## Explicit non-goals (still out of scope)
-
-- Horizons other than H=5  
-- `phase1_filters` membership/ADV wiring  
-- Model training, ranking, purged CV  
-- Rewriting published `core/v1` in place (use `core/v2`)
-
-## Suggested verdict format
-
-```text
-Overall: APPROVE | APPROVE WITH CHANGES | REJECT
-§ Semantics: ...
-§ PIT / leakage: ...
-§ Storage / validation: ...
-Unblock Modeling ADR proposal?: YES | NO (reasons)
-```
+See [07-phase-modeling-proposal.md](../decisions/07-phase-modeling-proposal.md).

@@ -1,9 +1,11 @@
 # ADR 06 — Label Generation
 
-**Status:** Finalized  
+**Status:** Finalized + E2E pipeline **APPROVED** (2026-07-19)  
 **Date locked:** 2026-07-19  
 **Supersedes:** [06-phase-label-generation-proposal.md](06-phase-label-generation-proposal.md)  
-**Depends on:** [01-phase1.md](01-phase1.md), [04-phase3.md](04-phase3.md), [05-feature-registry.md](05-feature-registry.md)
+**Depends on:** [01-phase1.md](01-phase1.md), [04-phase3.md](04-phase3.md), [05-feature-registry.md](05-feature-registry.md)  
+**E2E review:** [adr06-label-pipeline-review-packet.md](../reviews/adr06-label-pipeline-review-packet.md)  
+**Next:** [07-phase-modeling-proposal.md](07-phase-modeling-proposal.md) (docs only)
 
 ## Sign-off amendments
 
