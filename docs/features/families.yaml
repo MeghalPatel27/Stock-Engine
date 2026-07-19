@@ -1,0 +1,17 @@
+families:
+  - id: momentum
+    description: Return / momentum style features
+  - id: trend
+    description: Moving-average and trend-state features
+  - id: volatility
+    description: Volatility and range features
+  - id: liquidity
+    description: ADV, turnover, impact-style features
+  - id: market_structure
+    description: Market microstructure / structure inputs
+  - id: cross_sectional
+    description: Cross-sectional ranks, z-scores, relative features
+  - id: regime
+    description: Regime-related inputs (later)
+  - id: other
+    description: Uncategorized / transitional

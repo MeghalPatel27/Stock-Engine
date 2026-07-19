@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** Cleaning APPROVED (+ hardening). **ADR-05 Feature Registry design awaiting sign-off.** No feature implementation yet.
+**Status:** ADR-05 finalized. **Feature framework** implemented for review. No concrete feature formulas yet.
 
 ## Progress
 
@@ -12,14 +12,17 @@
 | Phase 0 Foundations | ✅ |
 | Phase 2 Data acquisition | ✅ |
 | Phase 3 Cleaning & normalization | ✅ APPROVED |
-| **Feature registry & store design** | ⏭️ **ADR-05 proposed** |
-| Feature implementation | ⛔ blocked |
+| ADR-05 Feature registry & store design | ✅ Finalized |
+| **Feature framework** (registry / DAG / store / publisher) | ⏭️ **review** |
+| Feature implementation (by family) | ⛔ blocked on framework review |
 | Labels → models → backtest → serve | ⛔ blocked |
 
 ## Hard stop
 
-Do not implement RSI/MACD/volatility/momentum/labels/models until ADR-05 is finalized.
+Do not implement RSI/MACD/volatility/momentum formulas until the **feature framework** is reviewed.
 
 ## Give reviewers next
 
-`docs/decisions/05-phase-feature-registry-proposal.md` — fill §18 checklist.
+Framework package: `src/stock_engine/features/`  
+ADR: `docs/decisions/05-feature-registry.md`  
+Tests: `tests/unit/features/`

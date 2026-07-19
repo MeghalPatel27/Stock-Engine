@@ -1,0 +1,21 @@
+name: fw__prod__panel
+version: v1
+family: other
+feature_type: rolling
+owner: framework-tests
+description: Production lifecycle fixture for fail-closed validation
+dtype: float
+dependencies:
+  - dataset:l1.equity_eod
+lookback_sessions: 2
+pit_rule: asof_session_close
+null_policy: fail_run
+lifecycle: production
+validation:
+  finite: true
+  min_value: 0.0
+  max_value: 1.0
+  allow_null: false
+recomputable: true
+computational_cost: medium
+stability: stable

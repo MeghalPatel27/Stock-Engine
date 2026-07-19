@@ -24,4 +24,4 @@
 
 ## Next
 
-**ADR-05 — Feature Registry & Feature Store Design** — design only; no feature implementation until finalized.
+**ADR-05 — Feature Registry & Feature Store Design** — finalized; framework under review before any concrete feature formulas.

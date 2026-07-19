@@ -1,11 +1,12 @@
 # Stock Intelligence Engine
 
-**Status:** Cleaning approved. Next: sign off **Feature Registry** design (ADR-05). No features yet.
+**Status:** ADR-05 finalized. Feature **framework** ready for review. No concrete feature formulas yet.
 
 ## Docs
 
 - [Charter](docs/PROJECT_CHARTER.md)
 - [ADRs](docs/decisions/)
+- [Feature registry notes](docs/features/)
 - [Incoming CSV](docs/data/incoming.md)
 - [Data dictionary](docs/data/dictionary/)
 - [Data requirements vs public availability](docs/data/DATA_AVAILABILITY.md)
@@ -13,9 +14,9 @@
 
 ## Current gate
 
-[`docs/decisions/05-phase-feature-registry-proposal.md`](docs/decisions/05-phase-feature-registry-proposal.md)
+Review [`docs/decisions/05-feature-registry.md`](docs/decisions/05-feature-registry.md) implementation under `src/stock_engine/features/`.
 
-## Quickstart (data)
+## Quickstart
 
 ```bash
 uv sync --extra dev

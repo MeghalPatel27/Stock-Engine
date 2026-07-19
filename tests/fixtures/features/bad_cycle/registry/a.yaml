@@ -1,0 +1,17 @@
+name: fw__cycle__a
+version: v1
+family: other
+feature_type: derived
+owner: framework-tests
+description: Cycle node A
+dtype: float
+dependencies:
+  - feature:fw__cycle__b@v1
+lookback_sessions: 0
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
