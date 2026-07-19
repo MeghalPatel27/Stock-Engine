@@ -10,5 +10,6 @@
 | 05 | Feature registry & feature store | Finalized + framework APPROVED | [05-feature-registry.md](05-feature-registry.md) |
 | 06 | Label generation | **Finalized** + E2E **APPROVED** | [06-label-generation.md](06-label-generation.md) · [review](../reviews/adr06-label-pipeline-review-packet.md) |
 | 07 | Modeling | **Finalized** (PICK A) | [07-modeling.md](07-modeling.md) |
+| 08 | Backtesting | **Finalized** | [08-backtesting.md](08-backtesting.md) · [cost sources](../backtest/COST_SOURCES.md) |
 
-**Current gate:** Implement Modeling **PICK A** (train join + purged WF + freeze + RankRow scorer). No backtest/serving yet.
+**Current gate:** Review backtest harness (real pilot only). Next: Inference / Serving ADR.
