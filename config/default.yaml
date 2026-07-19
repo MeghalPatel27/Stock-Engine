@@ -30,7 +30,7 @@ modeling:
   horizon: 5
   risk_weight: 1.0
   embargo_sessions: 5
-  min_train_sessions: 60
+  min_train_sessions: 252
   test_fold_sessions: 21
   step_sessions: 21
   top_k: 20
@@ -49,6 +49,21 @@ modeling:
   max_leaf_nodes: 31
   min_samples_leaf: 20
   l2_regularization: 1.0
+
+# See docs/backtest/COST_SOURCES.md for statutory / exchange citations
+backtest:
+  top_k: 20
+  capital_inr: 1000000
+  costs:
+    stt_rate: 0.001          # 0.10% delivery buy & sell (NSE STT schedule)
+    stamp_duty_rate: 0.00015 # 0.015% buy (NSE stamp duty)
+    exchange_txn_rate: 0.0000297  # 0.00297% / side (NSE cash FY25-26)
+    sebi_rate: 0.000001      # ₹10/crore
+    gst_rate: 0.18
+    brokerage_rate: 0.0      # discount-broker delivery default
+    dp_charge_inr: 15.34
+    apply_dp_charges: true
+    slippage_bps: 5.0        # liquid large-cap assumption (not statutory)
 
 paths:
   data_root: data

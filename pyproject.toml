@@ -28,6 +28,7 @@ stock-engine-lint-features = "stock_engine.features.cli:main"
 stock-engine-publish-features = "stock_engine.features.publish_cli:main"
 stock-engine-publish-labels = "stock_engine.labels.cli:main"
 stock-engine-score = "stock_engine.models.cli_score:main"
+stock-engine-backtest = "stock_engine.backtest.cli:main"
 
 [build-system]
 requires = ["hatchling"]

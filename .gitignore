@@ -25,7 +25,9 @@ data/clean/**
 data/features/**
 data/labels/**
 data/models/**
+data/backtests/**
 data/metadata/**
+!data/backtests/.gitkeep
 !data/raw/.gitkeep
 !data/clean/.gitkeep
 !data/features/.gitkeep
