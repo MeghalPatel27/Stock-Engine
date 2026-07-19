@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19
-**Status:** Pre-implementation — architecture philosophy finalized, no code built yet
+**Status:** Pre-implementation — philosophy finalized; Phase 1 design proposed (awaiting sign-off); no code built yet
 
 ---
 
@@ -92,8 +92,8 @@ These exist specifically to prevent the hybrid approach from becoming a dead-end
 This is the full ordered list of decision phases for the project. **Only Phase "Philosophy" above is finalized.** Everything below is identified but not yet decided.
 
 - [x] **Philosophy** — P3-leaning hybrid for V1, P2 as target (finalized above)
-- [ ] **Phase 0 — Foundations & cross-cutting**: language/runtime, local vs cloud, repo structure, environment/reproducibility, build-vs-buy posture
-- [ ] **Phase 1 — Problem formulation, universe & success criteria**: target definition (absolute vs relative return), label construction per horizon, formal meaning of bullish/bearish/risk/confidence, benchmark for "outperform," exact universe definition & reselection, success metrics
+- [ ] **Phase 0 — Foundations & cross-cutting**: language/runtime, local vs cloud, repo structure, environment/reproducibility, build-vs-buy posture *(soft prefs recorded; not locked)*
+- [~] **Phase 1 — Problem formulation, universe & success criteria**: answers received; design proposal awaiting sign-off — see [`docs/decisions/01-phase1-proposal.md`](decisions/01-phase1-proposal.md)
 - [ ] **Phase 2 — Data sourcing & acquisition**: provider per data type, required history depth, daily data-availability timing, licensing/ToS constraints, vendor redundancy
 - [ ] **Phase 3 — Data storage & schema**: storage paradigm per layer, raw/clean/feature boundaries, partitioning, bitemporal/point-in-time storage, versioning, symbol/ISIN mapping
 - [ ] **Phase 4 — Ingestion pipeline, orchestration & data quality**: orchestration tooling, idempotency/backfill, trading calendar handling, data-quality gating, failure alerting
@@ -114,23 +114,23 @@ This is the full ordered list of decision phases for the project. **Only Phase "
 
 **Done:**
 - Project goals, constraints, and non-goals defined
-- Three architecture paradigms formally compared across 6 axes (small-team dev, Indian data availability, explainability, incremental iteration, production robustness, long-term scalability)
-- V1 philosophy decided (hybrid/P3) with explicit rationale
-- Technical debt accepted vs refused, explicitly enumerated
-- Migration path from V1 to V2 (P2) defined with concrete triggers
-- Five non-negotiable invariants locked in for all future implementation
+- Three architecture paradigms formally compared across 6 axes
+- V1 philosophy decided (hybrid/P3) with invariants, debt policy, and V1→V2 migration path
 - Full decision-phase roadmap identified and ordered
+- Phase 1 clarifying questions answered; design proposal written
 
-**Not started:** everything from Phase 0 onward — no tech stack chosen, no data source selected, no schema designed, no code written, no data pulled.
+**In progress:**
+- Phase 1 sign-off on [`docs/decisions/01-phase1-proposal.md`](decisions/01-phase1-proposal.md)
+
+**Not started:** Phase 0 lock, Phases 2–12, all code/infra/data.
 
 ---
 
 ## 5. What's Left
 
-Immediate next decision, in order:
-1. **Phase 1 — Problem formulation** (recommended next): precise target definition, label construction, benchmark, universe rules, success metrics. This propagates into nearly every downstream layer, so it should be finalized before Phase 0 tech choices are locked, though a few Phase 0 questions (language/runtime) can be settled in parallel since they're low-risk.
-2. **Phase 0 — Foundations**: stack, hosting, repo layout.
-3. Then Phases 2 → 12 in order, one at a time, per the established working process (identify decisions → ask minimum clarifying questions → wait for answers → propose design → confirm before moving on).
+1. **Sign off Phase 1** (blocking): modeling objective, definitions, universe defaults, success bar — checklist at end of the proposal doc.
+2. **Phase 0 — Foundations**: stack/repo/reproducibility (Python + local-first already soft-preferred).
+3. Then Phases 2 → 12 in order, one at a time.
 
 No phase should be skipped or batched ahead of schedule.
 
@@ -138,15 +138,8 @@ No phase should be skipped or batched ahead of schedule.
 
 ## 6. What's Needed From You
 
-Nothing is due immediately — the next step is that Claude will ask targeted clarifying questions for **Phase 1** (and then Phase 0) before proposing any design. In general, across the roadmap, you'll be asked to provide or decide:
+**Now:** Phase 1 sign-off (or requested changes) on the proposal checklist.
 
-- **Definitions:** what "outperform" means precisely (vs. index/sector/peers), what risk score and confidence score should represent
-- **Universe rules:** exact large-cap F&O inclusion/exclusion criteria, rebalancing frequency
-- **Data access:** which specific data sources/providers you already have or are willing to use (e.g., broker APIs, NSE bhavcopy, any paid data if budget allows for any single piece), and any subscriptions already in hand
-- **Infra preferences:** local machine vs cloud, and any budget ceiling for compute/storage
-- **Tech preferences:** any hard constraints on language/stack (or full delegation to Claude's recommendation)
-- **Risk appetite / success bar:** what result would make V1 "good enough to trust," in your own terms
-- **Time horizon priorities:** whether next-day, 5-day, or 20-day prediction matters most for V1, if we need to sequence them rather than build all three at once
-- **Approval at each phase gate:** explicit sign-off before moving from one finalized phase to the next, per the collaboration rules
+Thereafter, per phase: definitions, data access, infra/budget, and explicit gate approval before the next phase.
 
 This document will be updated after each phase is finalized, so it always reflects the current source of truth for the project.
