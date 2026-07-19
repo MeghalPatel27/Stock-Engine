@@ -14,8 +14,13 @@ labels:
   # pilot is NOT suitable for production benchmarking
   universe_mode: pilot
   label_source: price_return_v1
-  # Optional ISIN allow-list when universe_mode=pilot (empty = all L1 names)
-  pilot_isins: []
+  # Pilot allow-list (docs/data/pilot_5_stocks). Empty = all L1 names, still tagged pilot.
+  pilot_isins:
+    - INE002A01018  # RELIANCE
+    - INE467B01029  # TCS
+    - INE009A01021  # INFY
+    - INE040A01034  # HDFCBANK
+    - INE090A01021  # ICICIBANK
 
 output:
   top_n_longs: 20

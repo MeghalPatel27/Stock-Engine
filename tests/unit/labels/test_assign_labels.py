@@ -56,6 +56,74 @@ def test_assign_labels_counts_and_quantiles_embedded() -> None:
     assert validate_label_frame(out, horizon=5, label_version="v1") == []
 
 
+def test_bearish_tie_break_prefers_smaller_isin() -> None:
+    """Bearish uses (R asc, isin asc) — not the tail of a desc sort."""
+    forward = pd.DataFrame(
+        {
+            "isin": ["INE002", "INE001", "INE000", "INE003", "INE004"],
+            "session_date": [pd.Timestamp("2026-07-10")] * 5,
+            # Two names tied at the bottom return
+            "forward_return": [0.0, 0.0, 0.1, 0.2, 0.3],
+        }
+    )
+    out = assign_labels(
+        forward,
+        horizon=5,
+        top_quantile=0.20,
+        bottom_quantile=0.20,
+        selection_policy="floor",
+        universe_mode="l1_intersection",
+        label_version="v1",
+        label_source="price_return_v1",
+    )
+    # floor(5*0.2)=1 bearish among tied 0.0 returns → smaller isin wins
+    bears = set(out.loc[out["label"] == "bearish", "isin"])
+    assert bears == {"INE001"}
+    bulls = set(out.loc[out["label"] == "bullish", "isin"])
+    assert bulls == {"INE004"}
+
+
+def test_ceil_policy_expands_tails() -> None:
+    forward = pd.DataFrame(
+        {
+            "isin": [f"INE{i:03d}" for i in range(5)],
+            "session_date": [pd.Timestamp("2026-07-10")] * 5,
+            "forward_return": [float(i) for i in range(5)],
+        }
+    )
+    out = assign_labels(
+        forward,
+        horizon=5,
+        top_quantile=0.20,
+        bottom_quantile=0.20,
+        selection_policy="ceil",
+        universe_mode="pilot",
+        label_version="v1",
+        label_source="price_return_v1",
+    )
+    # ceil(5*0.2)=1 → still 1/1; with n=11 ceil expands
+    assert (out["label"] == "bullish").sum() == 1
+    forward11 = pd.DataFrame(
+        {
+            "isin": [f"INE{i:03d}" for i in range(11)],
+            "session_date": [pd.Timestamp("2026-07-10")] * 11,
+            "forward_return": [float(i) for i in range(11)],
+        }
+    )
+    out11 = assign_labels(
+        forward11,
+        horizon=5,
+        top_quantile=0.20,
+        bottom_quantile=0.20,
+        selection_policy="ceil",
+        universe_mode="pilot",
+        label_version="v1",
+        label_source="price_return_v1",
+    )
+    assert (out11["label"] == "bullish").sum() == 3
+    assert (out11["label"] == "bearish").sum() == 3
+
+
 def test_duplicate_keys_fail_validation() -> None:
     frame = pd.DataFrame(
         {

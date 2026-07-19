@@ -8,6 +8,6 @@
 | 03 | Phase 2 — Data acquisition | Finalized | [03-phase2.md](03-phase2.md) · [ingest review](03-ingest-review.md) |
 | 04 | Phase 3 — Cleaning & CA | Finalized + cleaning **APPROVED** | [04-phase3.md](04-phase3.md) · [review](04-cleaning-review.md) |
 | 05 | Feature registry & feature store | Finalized + framework APPROVED | [05-feature-registry.md](05-feature-registry.md) |
-| 06 | Label generation | **Finalized** (PICK A H=5) | [06-label-generation.md](06-label-generation.md) |
+| 06 | Label generation | **Finalized** (PICK A H=5) | [06-label-generation.md](06-label-generation.md) · [review packet](../reviews/adr06-label-pipeline-review-packet.md) |
 
-**Current gate:** Review H=5 label pipeline. **Do not train models** until that passes.
+**Current gate:** E2E review of H=5 labels ([packet](../reviews/adr06-label-pipeline-review-packet.md)). **Do not train models** until that passes.

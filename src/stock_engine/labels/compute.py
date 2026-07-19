@@ -144,18 +144,24 @@ def assign_labels(
     pieces: list[pd.DataFrame] = []
     for _session, g in src.groupby("session_date", sort=True):
         g = g.copy()
-        # Deterministic order for ties: return desc for top, then isin
-        g = g.sort_values(["forward_return", "isin"], ascending=[False, True])
         n = len(g)
         k_top, k_bot = top_bottom_sizes(n, top_quantile, bottom_quantile, selection_policy)
 
-        labels = pd.Series(["neutral"] * n, index=g.index, dtype=object)
-        if k_top > 0:
-            labels.iloc[:k_top] = "bullish"
+        # Deterministic tie-break (ADR-06):
+        #   bullish top-k: sort (R desc, isin asc)
+        #   bearish bottom-k: sort (R asc, isin asc)
+        # On rare overlap after shrink, bullish wins.
+        labels = pd.Series("neutral", index=g.index, dtype=object)
         if k_bot > 0:
-            # bottom: lowest returns — take last k_bot in desc-sorted frame
-            labels.iloc[-k_bot:] = "bearish"
-            # If overlap (shouldn't after shrink), bullish wins already assigned top
+            bear_idx = g.sort_values(["forward_return", "isin"], ascending=[True, True]).index[
+                :k_bot
+            ]
+            labels.loc[bear_idx] = "bearish"
+        if k_top > 0:
+            bull_idx = g.sort_values(["forward_return", "isin"], ascending=[False, True]).index[
+                :k_top
+            ]
+            labels.loc[bull_idx] = "bullish"
 
         g = g.assign(
             label=labels.to_numpy(),

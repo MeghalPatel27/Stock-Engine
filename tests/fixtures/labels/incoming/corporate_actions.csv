@@ -1,0 +1,2 @@
+isin,symbol,ex_date,action_type,ratio_num,ratio_den,factor,notes
+INE002A01018,RELIANCE,2025-01-01,dividend,,,1.0,noop
