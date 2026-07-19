@@ -13,7 +13,11 @@ FIXTURES = Path(__file__).resolve().parents[2] / "fixtures" / "features"
 
 
 def test_topological_order_parent_before_child() -> None:
-    registry = load_registry(FIXTURES / "registry", FIXTURES / "families.yaml")
+    registry = load_registry(
+        FIXTURES / "registry",
+        FIXTURES / "families.yaml",
+        datasets_path=FIXTURES / "datasets.yaml",
+    )
     dag = validate_dag(registry.all())
     order = dag.topological_order()
     assert order.index("fw__base__panel@v1") < order.index("fw__child__panel@v1")
@@ -24,4 +28,6 @@ def test_cycle_rejected() -> None:
         load_registry(
             FIXTURES / "bad_cycle" / "registry",
             FIXTURES / "bad_cycle" / "families.yaml",
+            datasets_path=FIXTURES / "datasets.yaml",
+            validate_datasets=False,
         )

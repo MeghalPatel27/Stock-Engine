@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from stock_engine.features.hashing import feature_content_hash
 from stock_engine.features.models import FeatureSetManifest, FeatureSpec
 from stock_engine.features.registry import FeatureRegistry
 from stock_engine.features.store import FeatureStore, LocalParquetFeatureStore
@@ -46,13 +47,19 @@ def validate_publish_frame(
     Validate a precomputed feature frame against registry specs.
 
     Returns list of error strings (empty if ok). Missing key/feature columns
-    always error. Value checks fail-closed for ``production`` lifecycle when
-    ``production_fail_closed`` is True.
+    and duplicate ``(isin, session_date)`` keys always error. Value checks
+    fail-closed for ``production`` lifecycle when ``production_fail_closed``.
     """
     errors: list[str] = []
     for col in KEY_COLUMNS:
         if col not in frame.columns:
             errors.append(f"missing key column {col}")
+
+    if all(c in frame.columns for c in KEY_COLUMNS):
+        dup_mask = frame.duplicated(subset=list(KEY_COLUMNS), keep=False)
+        if bool(dup_mask.any()):
+            n_dup = int(dup_mask.sum())
+            errors.append(f"duplicate keys (isin, session_date): {n_dup} rows involved")
 
     for spec in specs:
         if spec.name not in frame.columns:
@@ -124,6 +131,7 @@ def publish_feature_frame(
         store_impl = LocalParquetFeatureStore(features_root)
 
     as_of = request.as_of_date.isoformat()
+    content_hash = feature_content_hash(request.frame)
     path = store_impl.write(
         request.frame,
         feature_set=request.feature_set,
@@ -139,6 +147,7 @@ def publish_feature_frame(
         config_hash=request.config_hash,
         config_version=request.config_version,
         registry_hash=registry.registry_hash(),
+        feature_content_hash=content_hash,
         feature_ids=list(request.feature_ids),
         row_count=len(request.frame),
         parquet_path=str(path),

@@ -277,3 +277,27 @@ Implement and review **framework only**:
 ## Explicit non-goals (framework phase)
 
 No RSI/MACD/momentum/volatility/liquidity compute. No labels. No models. No ranking. No backtests. No NSE downloaders in `src/`.
+
+---
+
+## Framework review follow-ups (post sign-off)
+
+Architecture review **APPROVED** the framework with five required improvements before Feature Phase:
+
+| # | Item | Status |
+|---|---|---|
+| 1 | Duplicate `(isin, session_date)` fail-closed in publish | **Done** — `validate_publish_frame` |
+| 2 | Dataset registry + existence validation for `dataset:` deps | **Done** — `docs/features/datasets.yaml` + loader checks |
+| 3 | Feature content hashing on published manifests | **Done** — `feature_content_hash` |
+| 4 | Incremental recomputation (new dates / affected ISINs) | **Deferred** — see below |
+| 5 | Registry lint command for CI | **Done** — `stock-engine-lint-features` |
+
+### Deferred: incremental recomputation
+
+V1 publish writes a full feature-set frame for an `as_of_date`. Incremental recompute (only new sessions or affected ISINs) is explicitly **out of scope** for the first feature wave. Track as a future enhancement / mini-ADR after several production features exist and rebuild cost matters.
+
+Schema compatibility matrices (feature ↔ dataset `schema_version`) are also deferred until multiple dataset schema versions coexist.
+
+### First feature after merge
+
+Start with a **raw projection** feature (e.g. expose `close_adj` via `feature_type: raw`) to validate registry → compute → publish → manifest → store end-to-end. Then simple return/rolling features. RSI/MACD only later.

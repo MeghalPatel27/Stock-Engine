@@ -2,17 +2,22 @@
 
 from stock_engine.features.calendar import require_lookback_sessions, sessions_on_or_before
 from stock_engine.features.dag import FeatureDAG, validate_dag
+from stock_engine.features.datasets import DatasetRegistry, load_dataset_registry
+from stock_engine.features.hashing import feature_content_hash
 from stock_engine.features.models import FeatureSpec
 from stock_engine.features.publish import FeaturePublishRequest, publish_feature_frame
 from stock_engine.features.registry import FeatureRegistry, load_registry
 from stock_engine.features.store import LocalParquetFeatureStore
 
 __all__ = [
+    "DatasetRegistry",
     "FeatureDAG",
     "FeaturePublishRequest",
     "FeatureRegistry",
     "FeatureSpec",
     "LocalParquetFeatureStore",
+    "feature_content_hash",
+    "load_dataset_registry",
     "load_registry",
     "publish_feature_frame",
     "require_lookback_sessions",

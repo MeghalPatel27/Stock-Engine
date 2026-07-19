@@ -1,6 +1,6 @@
 # Stock Intelligence Engine
 
-**Status:** ADR-05 finalized. Feature **framework** ready for review. No concrete feature formulas yet.
+**Status:** ADR-05 feature **framework approved**. Next after merge: first raw projection feature (not RSI/MACD).
 
 ## Docs
 
@@ -14,12 +14,13 @@
 
 ## Current gate
 
-Review [`docs/decisions/05-feature-registry.md`](docs/decisions/05-feature-registry.md) implementation under `src/stock_engine/features/`.
+Merge the feature framework PR, then add the first `feature_type: raw` projection.
 
 ## Quickstart
 
 ```bash
 uv sync --extra dev
 uv run stock-engine-ingest --as-of YYYY-MM-DD
+uv run stock-engine-lint-features
 uv run pytest
 ```

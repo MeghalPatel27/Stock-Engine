@@ -23,5 +23,7 @@ jobs:
         run: uv run ruff check src tests scripts
       - name: Ruff format
         run: uv run ruff format --check src tests scripts
+      - name: Lint feature registry
+        run: uv run stock-engine-lint-features
       - name: Tests
         run: uv run pytest

@@ -84,6 +84,7 @@ class FeatureSetManifest(BaseModel):
     config_hash: str
     config_version: str
     registry_hash: str
+    feature_content_hash: str
     feature_ids: list[str]
     row_count: int
     parquet_path: str

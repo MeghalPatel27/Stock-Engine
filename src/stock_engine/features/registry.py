@@ -10,6 +10,11 @@ import yaml
 from pydantic import ValidationError
 
 from stock_engine.features.dag import validate_dag
+from stock_engine.features.datasets import (
+    DatasetRegistry,
+    load_dataset_registry,
+    validate_dataset_deps,
+)
 from stock_engine.features.models import FamiliesFile, FeatureSpec
 
 
@@ -20,10 +25,12 @@ class FeatureRegistry:
         family_ids: set[str],
         *,
         root: Path,
+        datasets: DatasetRegistry | None = None,
     ) -> None:
         self._features = features
         self.family_ids = family_ids
         self.root = root
+        self.datasets = datasets
 
     def __contains__(self, feature_id: object) -> bool:
         return isinstance(feature_id, str) and feature_id in self._features
@@ -76,12 +83,14 @@ def load_registry(
     registry_dir: Path,
     families_path: Path,
     *,
+    datasets_path: Path | None = None,
     validate_graph: bool = True,
+    validate_datasets: bool = True,
 ) -> FeatureRegistry:
     """
     Load family catalog + all feature YAML files.
 
-    Raises ValueError on schema/family/DAG errors.
+    Raises ValueError on schema/family/DAG/dataset errors.
     """
     if not families_path.exists():
         msg = f"Missing families file: {families_path}"
@@ -94,6 +103,13 @@ def load_registry(
         msg = "families.yaml must declare at least one family"
         raise ValueError(msg)
 
+    dataset_registry: DatasetRegistry | None = None
+    if validate_datasets:
+        if datasets_path is None:
+            msg = "datasets_path is required when validate_datasets=True"
+            raise ValueError(msg)
+        dataset_registry = load_dataset_registry(datasets_path)
+
     features: dict[str, FeatureSpec] = {}
     errors: list[str] = []
 
@@ -102,12 +118,15 @@ def load_registry(
     else:
         paths = []
 
+    skip_names = {"families.yaml", "families.yml", "datasets.yaml", "datasets.yml"}
     for path in paths:
         if path.name.startswith("_"):
             continue
-        if path.name in {"families.yaml", "families.yml"}:
+        if path.name in skip_names:
             continue
         if path.resolve() == families_path.resolve():
+            continue
+        if datasets_path is not None and path.resolve() == datasets_path.resolve():
             continue
         try:
             raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
@@ -124,20 +143,34 @@ def load_registry(
             errors.append(f"{path.name}: duplicate feature_id {spec.feature_id}")
             continue
 
-        # Filename convention tip (not hard-required): name@version.yaml preferred
         features[spec.feature_id] = spec
 
     if errors:
         raise ValueError("Registry validation failed:\n- " + "\n- ".join(errors))
 
-    registry = FeatureRegistry(features, family_ids, root=registry_dir)
+    if dataset_registry is not None:
+        dep_pairs = [
+            (spec.feature_id, dep) for spec in features.values() for dep in spec.dataset_deps()
+        ]
+        ds_errors = validate_dataset_deps(dep_pairs, dataset_registry)
+        if ds_errors:
+            raise ValueError("Registry validation failed:\n- " + "\n- ".join(ds_errors))
+
+    registry = FeatureRegistry(
+        features,
+        family_ids,
+        root=registry_dir,
+        datasets=dataset_registry,
+    )
     if validate_graph:
         validate_dag(registry.all())
     return registry
 
 
-def default_registry_paths(repo_root: Path) -> tuple[Path, Path]:
+def default_registry_paths(repo_root: Path) -> tuple[Path, Path, Path]:
+    """Return (registry_dir, families_path, datasets_path)."""
     return (
         repo_root / "docs" / "features" / "registry",
         repo_root / "docs" / "features" / "families.yaml",
+        repo_root / "docs" / "features" / "datasets.yaml",
     )

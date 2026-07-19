@@ -1,0 +1,6 @@
+datasets:
+  - id: l1.equity_eod
+    schema_version: v1
+    description: Fixture L1 equity
+    unique_key: [isin, session_date]
+    required_columns: [isin, session_date, close_adj]

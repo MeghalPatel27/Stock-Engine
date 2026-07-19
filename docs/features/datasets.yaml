@@ -1,0 +1,45 @@
+# Feature-input dataset registry (ADR-05 follow-up).
+# Feature YAML deps use dataset:<id> and must resolve here.
+datasets:
+  - id: l0.equity_eod
+    schema_version: v1
+    description: L0 normalized unadjusted equity EOD
+    unique_key: [isin, session_date]
+    required_columns: [isin, symbol, session_date, close]
+
+  - id: l1.equity_eod
+    schema_version: v1
+    description: L1 price-return backward-adjusted equity EOD
+    unique_key: [isin, session_date]
+    required_columns:
+      - isin
+      - symbol
+      - session_date
+      - close_raw
+      - close_adj
+      - cumulative_adjustment_factor
+      - adjustment_method
+
+  - id: l0.corporate_actions
+    schema_version: v1
+    description: Normalized corporate actions
+    unique_key: [isin, ex_date, action_type]
+    required_columns: [isin, ex_date, action_type]
+
+  - id: l1.corporate_actions
+    schema_version: v1
+    description: Corporate actions published with L1 lineage
+    unique_key: [isin, ex_date, action_type]
+    required_columns: [isin, ex_date, action_type]
+
+  - id: trading_calendar
+    schema_version: v1
+    description: Canonical NSE trading calendar
+    unique_key: [session_date]
+    required_columns: [session_date, is_open]
+
+  - id: symbol_isin_map
+    schema_version: v1
+    description: Symbol ↔ ISIN validity map
+    unique_key: [isin, symbol, valid_from]
+    required_columns: [isin, symbol]

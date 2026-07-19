@@ -5,10 +5,19 @@
 ```text
 docs/features/
   families.yaml              # feature families
+  datasets.yaml              # feature-input datasets (dataset:<id>)
   registry/                  # one YAML per feature (empty until Feature Implementation)
   README.md
 data/features/               # published Parquet (gitignored contents)
 ```
+
+## Lint
+
+```bash
+uv run stock-engine-lint-features
+```
+
+CI runs this on every PR.
 
 ## Rules (ADR-05)
 

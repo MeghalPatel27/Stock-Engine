@@ -21,6 +21,7 @@ dev = [
 
 [project.scripts]
 stock-engine-ingest = "stock_engine.ingest.cli:main"
+stock-engine-lint-features = "stock_engine.features.cli:main"
 
 [build-system]
 requires = ["hatchling"]
