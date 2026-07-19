@@ -26,6 +26,7 @@ CI runs this on every PR.
 | `raw__close_adj__l1@v1` | raw | L1 `close_adj` projection |
 | `mom__ret__1d@v1` | rolling | 1-session simple return; depends on raw close |
 | `mom__ret__5d@v1` | rolling | 5-session simple return; depends on raw close |
+| `mom__ret__20d@v1` | rolling | 20-session simple return; depends on raw close |
 
 ```bash
 # Requires published L1 (+ calendar) for the same as-of partition
