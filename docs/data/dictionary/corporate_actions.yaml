@@ -1,0 +1,37 @@
+dataset: corporate_actions
+schema_version: v1
+description: >
+  Corporate actions. V1 price-return adjustment uses split/bonus/consolidation/rights/demerger
+  with resolvable factors. Ordinary cash dividends are stored but do not adjust price-return series.
+  Future total-return datasets may use dividends separately.
+unique_key: [isin, ex_date, action_type]
+columns:
+  isin:
+    type: string
+    nullable: false
+  symbol:
+    type: string
+    nullable: true
+  ex_date:
+    type: date
+    nullable: false
+  action_type:
+    type: string
+    nullable: false
+  ratio_num:
+    type: float
+    nullable: true
+  ratio_den:
+    type: float
+    nullable: true
+  factor:
+    type: float
+    nullable: true
+    description: Price multiplier for backward adjustment when provided.
+  notes:
+    type: string
+    nullable: true
+  adjusts_price_return:
+    type: bool
+    nullable: false
+    description: True when action_type is in the V1 price-return set.

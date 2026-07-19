@@ -1,0 +1,73 @@
+dataset: equity_eod
+schema_version: v1
+description: Daily equity OHLCV; L0 unadjusted, L1 price-return backward-adjusted.
+unique_key: [isin, session_date]
+columns:
+  isin:
+    type: string
+    nullable: false
+    description: Canonical security identifier.
+  symbol:
+    type: string
+    nullable: false
+    description: Trading symbol (display / secondary).
+  session_date:
+    type: date
+    nullable: false
+    description: NSE trading session date.
+  close_raw:
+    type: float
+    nullable: false
+    description: Unadjusted closing price (L1).
+  close_adj:
+    type: float
+    nullable: false
+    description: Backward price-return adjusted closing price (L1).
+  open_raw:
+    type: float
+    nullable: true
+  open_adj:
+    type: float
+    nullable: true
+  high_raw:
+    type: float
+    nullable: true
+  high_adj:
+    type: float
+    nullable: true
+  low_raw:
+    type: float
+    nullable: true
+  low_adj:
+    type: float
+    nullable: true
+  volume_raw:
+    type: float
+    nullable: true
+  volume_adj:
+    type: float
+    nullable: true
+  traded_value:
+    type: float
+    nullable: true
+  source_file:
+    type: string
+    nullable: false
+  raw_sha256:
+    type: string
+    nullable: false
+  ingested_at:
+    type: datetime
+    nullable: false
+  provider:
+    type: string
+    nullable: false
+  schema_version:
+    type: string
+    nullable: false
+  dataset_version:
+    type: string
+    nullable: false
+  run_id:
+    type: string
+    nullable: false

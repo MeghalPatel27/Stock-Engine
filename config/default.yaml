@@ -20,3 +20,12 @@ paths:
 ingest:
   row_count_deviation: 0.5
   provider: local_csv
+  missing_session_lookback_n: 5
+  outlier_abs_return: 0.5
+  fail_on_outliers: false
+
+schemas:
+  equity_eod: v1
+  corporate_actions: v1
+  symbol_isin_map: v1
+  trading_calendar: v1

@@ -48,6 +48,8 @@ def main(argv: list[str] | None = None) -> int:
         f"as_of={result.as_of_date} config_hash={result.config_hash[:12]}… "
         f"dataset_version={result.dataset_version}"
     )
+    for warn in result.warnings:
+        print(f"warning: {warn}", file=sys.stderr)
     if result.errors:
         for err in result.errors:
             print(f"error: {err}", file=sys.stderr)

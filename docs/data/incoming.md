@@ -1,38 +1,52 @@
-# Local CSV ingest inputs
+# Local CSV inputs (`data/incoming/`)
 
-Drop files into `data/incoming/`. The pipeline archives them to `data/raw/`,
-validates, and publishes Parquet under `data/clean/`.
+## Required files (for successful L1 publish)
 
-## Filenames
-
-| Dataset | Accepted names |
+| Dataset | Filenames |
 |---|---|
-| Equity EOD (required) | `equity_eod.csv` or `equity_eod__YYYY-MM-DD.csv` |
-| Corporate actions (required) | `corporate_actions.csv` or `corporate_actions__YYYY-MM-DD.csv` |
-| Symbol ↔ ISIN map (optional) | `symbol_isin_map.csv` or dated form |
+| Equity EOD | `equity_eod.csv` or `equity_eod__YYYY-MM-DD.csv` |
+| Corporate actions | `corporate_actions.csv` or dated |
+| Trading calendar | `trading_calendar.csv` or dated |
 
-## Required columns
+## Optional
+
+| Dataset | Filenames |
+|---|---|
+| Symbol ↔ ISIN map | `symbol_isin_map.csv` or dated |
+
+## Columns
 
 ### equity_eod
-`isin,symbol,session_date,close`  
-Optional: `open,high,low,volume,traded_value,adj_close`
+Required: `isin,symbol,session_date,close`  
+Optional: `open,high,low,volume,traded_value`
 
 ### corporate_actions
-`isin,ex_date,action_type`  
-Optional: `symbol,ratio_num,ratio_den,factor,notes`
+Required: `isin,ex_date,action_type`  
+Optional: `symbol,ratio_num,ratio_den,factor,notes`  
+Price-return adjusting types need `factor` or `ratio_num`/`ratio_den`.  
+Ordinary `dividend` rows are stored but **not** used for V1 price-return adjustment.
+
+### trading_calendar
+Required: `session_date,is_open`  
+Optional: `source`
 
 ### symbol_isin_map
-`isin,symbol`  
+Required: `isin,symbol`  
 Optional: `valid_from,valid_to`
 
-**Canonical id is ISIN.** `symbol` is for display / secondary mapping.
+## Output layout
+
+```text
+data/clean/l0/...   # normalized, unadjusted
+data/clean/l1/...   # canonical research (consume this later)
+data/raw/...        # immutable + SHA-256 sidecars
+data/metadata/...   # runs, manifests, pipeline state
+```
 
 ## Run
 
 ```bash
-uv sync --extra dev
-# copy your CSVs into data/incoming/
-uv run stock-engine-ingest
-# or
-uv run python scripts/run_ingest.py
+uv run stock-engine-ingest --as-of YYYY-MM-DD
 ```
+
+Data dictionaries: [`dictionary/`](dictionary/).

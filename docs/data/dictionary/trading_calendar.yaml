@@ -1,0 +1,14 @@
+dataset: trading_calendar
+schema_version: v1
+description: Canonical NSE equity session calendar — single source of truth.
+unique_key: [session_date]
+columns:
+  session_date:
+    type: date
+    nullable: false
+  is_open:
+    type: bool
+    nullable: false
+  source:
+    type: string
+    nullable: false

@@ -1,0 +1,17 @@
+dataset: symbol_isin_map
+schema_version: v1
+description: Symbol ↔ ISIN mapping with optional validity window.
+unique_key: [isin, symbol, valid_from]
+columns:
+  isin:
+    type: string
+    nullable: false
+  symbol:
+    type: string
+    nullable: false
+  valid_from:
+    type: date
+    nullable: false
+  valid_to:
+    type: date
+    nullable: true
