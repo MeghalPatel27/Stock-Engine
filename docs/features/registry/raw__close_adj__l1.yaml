@@ -1,0 +1,24 @@
+name: raw__close_adj__l1
+version: v1
+family: other
+feature_type: raw
+owner: stock-engine
+description: >
+  Point-in-time projection of L1 equity_eod.close_adj. First end-to-end feature
+  to validate registry → compute → publish → store. No transformation beyond
+  column selection and as-of filtering.
+dtype: float
+unit: INR
+dependencies:
+  - dataset:l1.equity_eod
+lookback_sessions: 0
+pit_rule: asof_session_close
+null_policy: fail_run
+lifecycle: experimental
+validation:
+  finite: true
+  min_value: 0.0
+  allow_null: false
+recomputable: true
+computational_cost: low
+stability: experimental

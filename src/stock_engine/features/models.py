@@ -24,7 +24,8 @@ class FeatureValidation(BaseModel):
 class FeatureSpec(BaseModel):
     """Machine-readable feature definition (registry entry)."""
 
-    name: str = Field(min_length=1, pattern=r"^[a-z][a-z0-9]*(__[a-z0-9]+)+$")
+    # Segments may contain underscores (e.g. close_adj, adv_inr); joined by __
+    name: str = Field(min_length=1, pattern=r"^[a-z][a-z0-9_]*(__[a-z0-9_]+)+$")
     version: str = Field(min_length=1, pattern=r"^v[0-9]+$")
     family: str = Field(min_length=1)
     feature_type: FeatureType

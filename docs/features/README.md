@@ -19,6 +19,17 @@ uv run stock-engine-lint-features
 
 CI runs this on every PR.
 
+## Registered features
+
+| Feature id | Type | Notes |
+|---|---|---|
+| `raw__close_adj__l1@v1` | raw | L1 `close_adj` projection (first E2E feature) |
+
+```bash
+# Requires published L1 for the same as-of partition
+uv run stock-engine-publish-features --as-of YYYY-MM-DD
+```
+
 ## Rules (ADR-05)
 
 - Register features before implementing compute.  
