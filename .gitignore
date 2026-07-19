@@ -23,10 +23,12 @@ config/local.yaml
 data/raw/**
 data/clean/**
 data/features/**
+data/labels/**
 data/metadata/**
 !data/raw/.gitkeep
 !data/clean/.gitkeep
 !data/features/.gitkeep
+!data/labels/.gitkeep
 !data/metadata/.gitkeep
 
 # OS / IDE

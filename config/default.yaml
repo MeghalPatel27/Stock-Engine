@@ -9,6 +9,13 @@ labels:
   top_quantile: 0.20
   bottom_quantile: 0.20
   horizon_primary: 5
+  selection_policy: floor
+  # pilot | l1_intersection | phase1_filters
+  # pilot is NOT suitable for production benchmarking
+  universe_mode: pilot
+  label_source: price_return_v1
+  # Optional ISIN allow-list when universe_mode=pilot (empty = all L1 names)
+  pilot_isins: []
 
 output:
   top_n_longs: 20

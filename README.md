@@ -1,19 +1,17 @@
 # Stock Intelligence Engine
 
-**Status:** 25 features on `main`. Next: sign off **Label Generation** (ADR-06).
+**Status:** ADR-06 finalized. H=5 **label pipeline** shipping. No model training yet.
 
 ## Docs
 
 - [Charter](docs/PROJECT_CHARTER.md)
 - [ADRs](docs/decisions/)
 - [Feature backlog](docs/features/FEATURE_BACKLOG.md)
-- [Incoming CSV](docs/data/incoming.md)
-- [Data dictionary](docs/data/dictionary/)
 - [Pilot 5 stocks](docs/data/pilot_5_stocks/README.md)
 
 ## Current gate
 
-[`docs/decisions/06-phase-label-generation-proposal.md`](docs/decisions/06-phase-label-generation-proposal.md)
+Review label publish E2E, then **Modeling ADR**.
 
 ## Quickstart
 
@@ -21,6 +19,6 @@
 uv sync --extra dev
 uv run stock-engine-ingest --as-of YYYY-MM-DD
 uv run stock-engine-publish-features --as-of YYYY-MM-DD
-uv run stock-engine-lint-features
+uv run stock-engine-publish-labels --as-of YYYY-MM-DD --overwrite
 uv run pytest
 ```
