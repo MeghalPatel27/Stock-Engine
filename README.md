@@ -8,6 +8,7 @@
 - [ADRs](docs/decisions/)
 - [Incoming CSV](docs/data/incoming.md)
 - [Data dictionary](docs/data/dictionary/)
+- [Data requirements vs public availability](docs/data/DATA_AVAILABILITY.md)
 
 ## Current gate
 
