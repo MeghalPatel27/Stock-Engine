@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** Feature framework on `main`. Implementing first raw feature (`raw__close_adj__l1`).
+**Status:** `raw__close_adj__l1` on `main`. Adding first computed feature `mom__ret__1d`.
 
 ## Progress
 
@@ -14,8 +14,9 @@
 | Phase 3 Cleaning & normalization | ✅ APPROVED |
 | ADR-05 Feature registry & store design | ✅ Finalized |
 | **Feature framework** (registry / DAG / store / publisher) | ✅ APPROVED (+ follow-ups) |
-| Feature implementation — `raw__close_adj__l1` | ⏭️ in progress |
-| Feature families (returns / trend / vol / liq) | ⛔ after first raw E2E |
+| Feature — `raw__close_adj__l1` | ✅ |
+| Feature — `mom__ret__1d` | ⏭️ in progress |
+| More momentum / trend / vol / liq | ⛔ next |
 | Labels → models → backtest → serve | ⛔ blocked |
 
 ## Hard stop

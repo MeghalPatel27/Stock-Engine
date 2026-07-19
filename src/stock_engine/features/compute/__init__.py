@@ -3,18 +3,19 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from datetime import date
 
 import pandas as pd
 
+from stock_engine.features.compute.context import ComputeContext
+from stock_engine.features.compute.mom_ret import compute_mom_ret_1d
 from stock_engine.features.compute.raw_close_adj import compute_raw_close_adj_l1
 from stock_engine.features.models import FeatureSpec
 
-FeatureComputer = Callable[..., pd.DataFrame]
+FeatureComputer = Callable[[ComputeContext, FeatureSpec], pd.DataFrame]
 
-# feature_id -> computer(l1_equity, *, as_of_date, spec) -> frame
 FEATURE_COMPUTERS: dict[str, FeatureComputer] = {
     "raw__close_adj__l1@v1": compute_raw_close_adj_l1,
+    "mom__ret__1d@v1": compute_mom_ret_1d,
 }
 
 
@@ -28,8 +29,7 @@ def get_computer(feature_id: str) -> FeatureComputer:
 def compute_feature(
     feature_id: str,
     *,
-    l1_equity: pd.DataFrame,
-    as_of_date: date,
+    ctx: ComputeContext,
     spec: FeatureSpec,
 ) -> pd.DataFrame:
-    return get_computer(feature_id)(l1_equity, as_of_date=as_of_date, spec=spec)
+    return get_computer(feature_id)(ctx, spec)
