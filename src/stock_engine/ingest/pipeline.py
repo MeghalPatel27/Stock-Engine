@@ -16,6 +16,7 @@ from stock_engine.ingest.adjust import build_l1_equity_eod
 from stock_engine.ingest.calendar_checks import detect_missing_sessions
 from stock_engine.ingest.clean_store import write_clean_parquet
 from stock_engine.ingest.datasets import (
+    ADJUSTMENT_METHOD,
     REQUIRED_FOR_L0,
     REQUIRED_FOR_L1,
     SCHEMA_VERSIONS,
@@ -36,6 +37,10 @@ from stock_engine.ingest.normalize import (
     normalize_trading_calendar,
 )
 from stock_engine.ingest.protocol import DataArtifact, DataSource
+from stock_engine.ingest.publish_meta import (
+    published_meta_for_l1_equity,
+    write_published_dataset_meta,
+)
 from stock_engine.ingest.raw_store import archive_raw
 from stock_engine.ingest.validate import (
     parse_as_of_from_equity,
@@ -266,6 +271,20 @@ def run_ingest(
                 )
             )
             write_dataset_manifest(manifests[-1], metadata_root)
+            write_published_dataset_meta(
+                published_meta_for_l1_equity(
+                    schema_version=SCHEMA_VERSIONS["equity_eod"],
+                    dataset_version=version,
+                    adjustment_method=ADJUSTMENT_METHOD,
+                    config_hash=config_hash,
+                    config_version=config_version,
+                    run_id=run_id,
+                    as_of_date=inferred,
+                    row_count=len(l1_df),
+                    parquet_path=str(l1_path),
+                ),
+                metadata_root,
+            )
             l1_published = True
             log.info("L1 equity published rows=%s path=%s", len(l1_df), l1_path)
 

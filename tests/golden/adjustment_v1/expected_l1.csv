@@ -1,0 +1,4 @@
+isin,session_date,close_raw,close_adj,cumulative_adjustment_factor,adjustment_method
+INEGOLD001,2026-07-14,400.0,100.0,0.25,backward_price_return_v1
+INEGOLD001,2026-07-15,200.0,100.0,0.5,backward_price_return_v1
+INEGOLD001,2026-07-16,100.0,100.0,1.0,backward_price_return_v1

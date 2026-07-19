@@ -4,10 +4,20 @@ from __future__ import annotations
 
 import pandas as pd
 
-from stock_engine.ingest.datasets import L1_EQUITY_COLUMNS, PRICE_RETURN_ACTION_TYPES
+from stock_engine.ingest.datasets import (
+    ADJUSTMENT_METHOD,
+    L1_EQUITY_COLUMNS,
+    PRICE_RETURN_ACTION_TYPES,
+)
 
 
 def resolve_price_factor(row: pd.Series) -> float | None:
+    """
+    Resolve a single-event price multiplier for backward adjustment.
+
+    Note: V1 uses float; post-V1 should migrate cumulative products to Decimal
+    (or another deterministic numeric type) to avoid long-history drift.
+    """
     if pd.notna(row.get("factor")):
         val = float(row["factor"])
         return val if val > 0 else None
@@ -38,6 +48,8 @@ def build_l1_equity_eod(
         ca["ex_date"] = pd.to_datetime(ca["ex_date"]).dt.normalize()
         ca = ca[ca["action_type"].isin(PRICE_RETURN_ACTION_TYPES)].copy()
         ca["price_factor"] = ca.apply(resolve_price_factor, axis=1)
+        # Rows that claim to adjust but lack factor are excluded here; DQ should
+        # have failed closed earlier for missing factors on adjusting types.
         ca = ca[ca["price_factor"].notna()].copy()
     else:
         ca = corporate_actions_l0.iloc[0:0].copy()
@@ -57,14 +69,15 @@ def build_l1_equity_eod(
                 adj_factors.append(float(events.loc[mask, "price_factor"].astype(float).prod()))
             else:
                 adj_factors.append(1.0)
-        g["adj_factor"] = adj_factors
+        g["cumulative_adjustment_factor"] = adj_factors
+        g["adjustment_method"] = ADJUSTMENT_METHOD
 
         for raw_col in ("open", "high", "low", "close"):
             g[f"{raw_col}_raw"] = pd.to_numeric(g[raw_col], errors="coerce")
-            g[f"{raw_col}_adj"] = g[f"{raw_col}_raw"] * g["adj_factor"]
+            g[f"{raw_col}_adj"] = g[f"{raw_col}_raw"] * g["cumulative_adjustment_factor"]
 
         g["volume_raw"] = pd.to_numeric(g.get("volume"), errors="coerce")
-        g["volume_adj"] = g["volume_raw"] / g["adj_factor"]
+        g["volume_adj"] = g["volume_raw"] / g["cumulative_adjustment_factor"]
         g["traded_value"] = pd.to_numeric(g.get("traded_value"), errors="coerce")
 
         g = g.sort_values("session_date")

@@ -1,0 +1,6 @@
+{
+  "dataset": "equity_eod_l1",
+  "schema_version": "v1",
+  "adjustment_method": "backward_price_return_v1",
+  "description": "Golden benchmark for sequential 2:1 splits. Do not change casually."
+}

@@ -1,33 +1,25 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** Phase 3 cleaning implemented (L0/L1). Awaiting cleaning review. **Next design phase: Feature Registry & Feature Store — before any feature/label code.**
+**Status:** Cleaning APPROVED (+ hardening). **ADR-05 Feature Registry design awaiting sign-off.** No feature implementation yet.
 
-## Finalized ADRs
+## Progress
 
-| ADR | Doc |
+| Step | Status |
 |---|---|
-| 00 Philosophy | [decisions/00-philosophy.md](decisions/00-philosophy.md) |
-| 01 Problem formulation | [decisions/01-phase1.md](decisions/01-phase1.md) |
-| 02 Foundations | [decisions/02-phase0.md](decisions/02-phase0.md) |
-| 03 Data acquisition | [decisions/03-phase2.md](decisions/03-phase2.md) |
-| 04 Cleaning & CA methodology | [decisions/04-phase3.md](decisions/04-phase3.md) |
-
-## Implemented
-
-- Local CSV ingest → immutable raw + SHA-256  
-- L0 normalized Parquet + lineage + schema versions  
-- Canonical `trading_calendar` + missing-session detection (N configurable, default 5)  
-- L1 backward **price-return** adjustment (raw + adj); ordinary dividends not applied to price-return  
-- Data dictionaries under `docs/data/dictionary/`  
+| Charter / Philosophy | ✅ |
+| Phase 1 Problem formulation | ✅ |
+| Phase 0 Foundations | ✅ |
+| Phase 2 Data acquisition | ✅ |
+| Phase 3 Cleaning & normalization | ✅ APPROVED |
+| **Feature registry & store design** | ⏭️ **ADR-05 proposed** |
+| Feature implementation | ⛔ blocked |
+| Labels → models → backtest → serve | ⛔ blocked |
 
 ## Hard stop
 
-Do **not** start technical indicators, ML features, labels, probabilities, models, ranking, or backtesting until:
+Do not implement RSI/MACD/volatility/momentum/labels/models until ADR-05 is finalized.
 
-1. This cleaning layer is reviewed/approved, and  
-2. A **Feature Registry & Feature Store** design ADR is written and signed off.
+## Give reviewers next
 
-## What's needed from you
-
-Architecture review of the Phase 3 cleaning implementation (L0/L1 outputs + CA policy).
+`docs/decisions/05-phase-feature-registry-proposal.md` — fill §18 checklist.

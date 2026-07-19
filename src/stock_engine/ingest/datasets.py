@@ -70,6 +70,9 @@ L0_COLUMNS: dict[str, tuple[str, ...]] = {
     "trading_calendar": ("session_date", "is_open", "source"),
 }
 
+# Versioned price-return adjustment methodology (bump when semantics change)
+ADJUSTMENT_METHOD = "backward_price_return_v1"
+
 L1_EQUITY_COLUMNS: tuple[str, ...] = (
     "isin",
     "symbol",
@@ -85,6 +88,8 @@ L1_EQUITY_COLUMNS: tuple[str, ...] = (
     "low_adj",
     "close_adj",
     "volume_adj",
+    "cumulative_adjustment_factor",
+    "adjustment_method",
 )
 
 LINEAGE_COLUMNS: tuple[str, ...] = (

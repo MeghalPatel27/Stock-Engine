@@ -1,24 +1,22 @@
 # Stock Intelligence Engine
 
-Daily post-close ranking of liquid Indian F&O equities by near-term cross-sectional outperformance probability.
+**Status:** Cleaning approved. Next: sign off **Feature Registry** design (ADR-05). No features yet.
 
-**Status:** Phase 3 cleaning (L0/L1 + price-return CA adjustment) implemented. **Next gate: review cleaning, then Feature Registry design — not features/labels yet.**
-
-## Source of truth
+## Docs
 
 - [Charter](docs/PROJECT_CHARTER.md)
 - [ADRs](docs/decisions/)
-- [Incoming CSV guide](docs/data/incoming.md)
+- [Incoming CSV](docs/data/incoming.md)
 - [Data dictionary](docs/data/dictionary/)
 
-## Quickstart
+## Current gate
+
+[`docs/decisions/05-phase-feature-registry-proposal.md`](docs/decisions/05-phase-feature-registry-proposal.md)
+
+## Quickstart (data)
 
 ```bash
 uv sync --extra dev
-uv run python scripts/bootstrap.py
-# Drop equity_eod + corporate_actions + trading_calendar into data/incoming/
 uv run stock-engine-ingest --as-of YYYY-MM-DD
 uv run pytest
 ```
-
-Clean outputs: `data/clean/l0/` (normalized) and `data/clean/l1/` (canonical — consume later).

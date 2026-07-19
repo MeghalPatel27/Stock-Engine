@@ -23,6 +23,14 @@ columns:
     type: float
     nullable: false
     description: Backward price-return adjusted closing price (L1).
+  cumulative_adjustment_factor:
+    type: float
+    nullable: false
+    description: Product of subsequent price-return CA factors applied to this row.
+  adjustment_method:
+    type: string
+    nullable: false
+    description: Methodology id, e.g. backward_price_return_v1.
   open_raw:
     type: float
     nullable: true
