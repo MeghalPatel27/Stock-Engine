@@ -23,6 +23,7 @@ dev = [
 stock-engine-ingest = "stock_engine.ingest.cli:main"
 stock-engine-lint-features = "stock_engine.features.cli:main"
 stock-engine-publish-features = "stock_engine.features.publish_cli:main"
+stock-engine-publish-labels = "stock_engine.labels.cli:main"
 
 [build-system]
 requires = ["hatchling"]

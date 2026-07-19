@@ -47,6 +47,31 @@ def sessions_on_or_before(
     return eligible[-n:]
 
 
+def session_after(
+    calendar: CalendarLike,
+    session: date | datetime | pd.Timestamp,
+    *,
+    offset: int,
+) -> pd.Timestamp | None:
+    """
+    Return the open session ``offset`` steps after ``session`` (offset>0 forward).
+
+    Returns None if ``session`` is not an open day or the offset is out of range.
+    """
+    if offset < 0:
+        msg = "offset must be >= 0"
+        raise ValueError(msg)
+    sessions = open_sessions(calendar)
+    target = _to_timestamp(session)
+    locs = sessions.get_indexer([target])
+    if int(locs[0]) < 0:
+        return None
+    j = int(locs[0]) + offset
+    if j >= len(sessions):
+        return None
+    return sessions[j]
+
+
 def require_lookback_sessions(
     calendar: CalendarLike,
     as_of: date | datetime | pd.Timestamp,
