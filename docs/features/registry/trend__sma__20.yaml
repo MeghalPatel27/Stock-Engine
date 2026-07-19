@@ -1,0 +1,21 @@
+name: trend__sma__20
+version: v1
+family: trend
+feature_type: rolling
+owner: stock-engine
+description: >
+  SMA(20) of raw__close_adj__l1 on open sessions.
+dtype: float
+unit: INR
+dependencies:
+  - feature:raw__close_adj__l1@v1
+lookback_sessions: 20
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

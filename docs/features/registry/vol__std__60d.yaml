@@ -1,0 +1,21 @@
+name: vol__std__60d
+version: v1
+family: volatility
+feature_type: rolling
+owner: stock-engine
+description: >
+  Stdev of mom__ret__1d over 60 open sessions (ddof=0).
+dtype: float
+unit: return
+dependencies:
+  - feature:mom__ret__1d@v1
+lookback_sessions: 61
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

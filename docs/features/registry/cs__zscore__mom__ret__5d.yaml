@@ -1,0 +1,21 @@
+name: cs__zscore__mom__ret__5d
+version: v1
+family: cross_sectional
+feature_type: cross_sectional
+owner: stock-engine
+description: >
+  Cross-sectional z-score of mom__ret__5d within session (all available ISINs).
+dtype: float
+unit: dimensionless
+dependencies:
+  - feature:mom__ret__5d@v1
+lookback_sessions: 5
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

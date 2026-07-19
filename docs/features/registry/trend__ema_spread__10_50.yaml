@@ -1,0 +1,22 @@
+name: trend__ema_spread__10_50
+version: v1
+family: trend
+feature_type: composite
+owner: stock-engine
+description: >
+  (EMA10 - EMA50) / EMA50.
+dtype: float
+unit: return
+dependencies:
+  - feature:trend__ema__10@v1
+  - feature:trend__ema__50@v1
+lookback_sessions: 50
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental
