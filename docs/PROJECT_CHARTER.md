@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** Momentum features in progress (`mom__ret__1d` done, `mom__ret__5d` next).
+**Status:** Momentum returns `1d`/`5d`/`20d` on `main` path.
 
 ## Progress
 
@@ -16,8 +16,9 @@
 | **Feature framework** (registry / DAG / store / publisher) | ✅ APPROVED (+ follow-ups) |
 | Feature — `raw__close_adj__l1` | ✅ |
 | Feature — `mom__ret__1d` | ✅ |
-| Feature — `mom__ret__5d` | ✅ (this PR) |
-| More momentum / trend / vol / liq | ⛔ next |
+| Feature — `mom__ret__5d` | ✅ |
+| Feature — `mom__ret__20d` | ✅ (this PR) |
+| Trend / vol / liq families | ⛔ next |
 | Labels → models → backtest → serve | ⛔ blocked |
 
 ## Hard stop

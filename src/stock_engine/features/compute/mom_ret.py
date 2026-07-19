@@ -60,3 +60,8 @@ def compute_mom_ret_1d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
 def compute_mom_ret_5d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
     """close[T] / close[T-5] - 1 (5 open sessions)."""
     return _compute_mom_ret_nd(ctx, spec, periods=5)
+
+
+def compute_mom_ret_20d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
+    """close[T] / close[T-20] - 1 (20 open sessions)."""
+    return _compute_mom_ret_nd(ctx, spec, periods=20)
