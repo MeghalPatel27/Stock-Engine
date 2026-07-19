@@ -9,6 +9,7 @@
 - [Incoming CSV](docs/data/incoming.md)
 - [Data dictionary](docs/data/dictionary/)
 - [Data requirements vs public availability](docs/data/DATA_AVAILABILITY.md)
+- [Pilot 5 stocks — CSV templates & sources](docs/data/pilot_5_stocks/README.md)
 
 ## Current gate
 
