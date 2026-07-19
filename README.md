@@ -1,6 +1,6 @@
 # Stock Intelligence Engine
 
-**Status:** Building `mom__ret__1d` (1-session return). Not RSI/MACD yet.
+**Status:** Building `mom__ret__5d` (5-session return). Not RSI/MACD yet.
 
 ## Docs
 
@@ -14,7 +14,7 @@
 
 ## Current gate
 
-Ship `mom__ret__1d` (depends on `raw__close_adj__l1`).
+Ship `mom__ret__5d` (depends on `raw__close_adj__l1`).
 
 ## Quickstart
 

@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** `raw__close_adj__l1` on `main`. Adding first computed feature `mom__ret__1d`.
+**Status:** Momentum features in progress (`mom__ret__1d` done, `mom__ret__5d` next).
 
 ## Progress
 
@@ -15,7 +15,8 @@
 | ADR-05 Feature registry & store design | ✅ Finalized |
 | **Feature framework** (registry / DAG / store / publisher) | ✅ APPROVED (+ follow-ups) |
 | Feature — `raw__close_adj__l1` | ✅ |
-| Feature — `mom__ret__1d` | ⏭️ in progress |
+| Feature — `mom__ret__1d` | ✅ |
+| Feature — `mom__ret__5d` | ✅ (this PR) |
 | More momentum / trend / vol / liq | ⛔ next |
 | Labels → models → backtest → serve | ⛔ blocked |
 
