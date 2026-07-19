@@ -1,0 +1,24 @@
+isin,symbol,ex_date,action_type,ratio_num,ratio_den,factor,notes
+INE002A01018,RELIANCE,2024-08-19,dividend,,,,Dividend - Rs 10 Per Share
+INE002A01018,RELIANCE,2024-10-28,bonus,1.0,2.0,0.5,Bonus 1:1
+INE002A01018,RELIANCE,2025-08-14,dividend,,,,Dividend - Rs 5.5 Per Share
+INE002A01018,RELIANCE,2026-06-05,dividend,,,,Dividend - Rs 6 Per Share
+INE009A01021,INFY,2024-10-29,dividend,,,,Interim Dividend - Rs 21 Per Share
+INE009A01021,INFY,2025-05-30,dividend,,,,Dividend - Rs 22 Per Share
+INE009A01021,INFY,2025-10-27,dividend,,,,Interim Dividend - Rs 23 Per Share
+INE009A01021,INFY,2025-11-14,buyback,,,,Buy Back
+INE009A01021,INFY,2026-06-10,dividend,,,,Dividend - Rs 25 Per Share
+INE040A01034,HDFCBANK,2025-06-27,dividend,,,,Dividend - Rs 22 Per Share
+INE040A01034,HDFCBANK,2025-07-25,dividend,,,,Special Dividend - Rs 5 Per Share
+INE040A01034,HDFCBANK,2025-08-26,bonus,1.0,2.0,0.5,Bonus 1:1
+INE040A01034,HDFCBANK,2026-06-19,dividend,,,,Dividend - Rs 13 Per Share
+INE090A01021,ICICIBANK,2024-08-12,dividend,,,,Dividend - Rs 10 Per Share
+INE090A01021,ICICIBANK,2025-08-12,dividend,,,,Dividend - Rs 11 Per Share
+INE467B01029,TCS,2024-10-18,dividend,,,,Interim Dividend - Rs 10 Per Share
+INE467B01029,TCS,2025-01-17,dividend,,,,Interim Dividend - Rs 10 Per Share Special Dividend - Rs 66 Per Share
+INE467B01029,TCS,2025-06-04,dividend,,,,Dividend - Rs 30 Per Share
+INE467B01029,TCS,2025-07-16,dividend,,,,Interim Dividend - Rs 11 Per Share
+INE467B01029,TCS,2025-10-15,dividend,,,,Interim Dividend - Rs 11 Per Share
+INE467B01029,TCS,2026-01-16,dividend,,,,Interim Dividend Rs 11 Per Share/ Special Dividend Rs 46 Per Share
+INE467B01029,TCS,2026-05-25,dividend,,,,Dividend - Rs 31 Per Share
+INE467B01029,TCS,2026-07-15,dividend,,,,Interim Dividend - Rs 12 Per Share
