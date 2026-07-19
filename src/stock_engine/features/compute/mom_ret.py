@@ -1,4 +1,4 @@
-"""mom__ret__1d — one-session simple return on adjusted close."""
+"""Momentum simple returns on adjusted close (trading-session lookbacks)."""
 
 from __future__ import annotations
 
@@ -11,12 +11,16 @@ UPSTREAM_ID = "raw__close_adj__l1@v1"
 UPSTREAM_COL = "raw__close_adj__l1"
 
 
-def compute_mom_ret_1d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
+def _compute_mom_ret_nd(ctx: ComputeContext, spec: FeatureSpec, *, periods: int) -> pd.DataFrame:
     """
-    Compute close[T] / close[T-1] - 1 on open trading sessions only.
+    Compute close[T] / close[T-N] - 1 on open trading sessions only.
 
-    Insufficient lookback (first open session per ISIN) → NaN (null_policy=propagate).
+    Insufficient lookback (fewer than N prior open sessions) → NaN.
     """
+    if periods < 1:
+        msg = f"{spec.feature_id}: periods must be >= 1"
+        raise ValueError(msg)
+
     if UPSTREAM_ID not in ctx.features:
         msg = f"{spec.feature_id}: missing upstream feature {UPSTREAM_ID}"
         raise ValueError(msg)
@@ -36,8 +40,7 @@ def compute_mom_ret_1d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
 
     src = src.sort_values(["isin", "session_date"]).reset_index(drop=True)
     close = pd.to_numeric(src[UPSTREAM_COL], errors="coerce")
-    # Groupby pct_change uses prior row in sorted open-session series (= prior open day)
-    ret = close.groupby(src["isin"], sort=False).pct_change(periods=1)
+    ret = close.groupby(src["isin"], sort=False).pct_change(periods=periods)
 
     out = pd.DataFrame(
         {
@@ -47,3 +50,13 @@ def compute_mom_ret_1d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
         }
     )
     return out.sort_values(["isin", "session_date"]).reset_index(drop=True)
+
+
+def compute_mom_ret_1d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
+    """close[T] / close[T-1] - 1."""
+    return _compute_mom_ret_nd(ctx, spec, periods=1)
+
+
+def compute_mom_ret_5d(ctx: ComputeContext, spec: FeatureSpec) -> pd.DataFrame:
+    """close[T] / close[T-5] - 1 (5 open sessions)."""
+    return _compute_mom_ret_nd(ctx, spec, periods=5)

@@ -7,7 +7,7 @@ from collections.abc import Callable
 import pandas as pd
 
 from stock_engine.features.compute.context import ComputeContext
-from stock_engine.features.compute.mom_ret import compute_mom_ret_1d
+from stock_engine.features.compute.mom_ret import compute_mom_ret_1d, compute_mom_ret_5d
 from stock_engine.features.compute.raw_close_adj import compute_raw_close_adj_l1
 from stock_engine.features.models import FeatureSpec
 
@@ -16,6 +16,7 @@ FeatureComputer = Callable[[ComputeContext, FeatureSpec], pd.DataFrame]
 FEATURE_COMPUTERS: dict[str, FeatureComputer] = {
     "raw__close_adj__l1@v1": compute_raw_close_adj_l1,
     "mom__ret__1d@v1": compute_mom_ret_1d,
+    "mom__ret__5d@v1": compute_mom_ret_5d,
 }
 
 
