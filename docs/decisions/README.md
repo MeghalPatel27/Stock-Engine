@@ -14,4 +14,6 @@ Working process (locked by charter):
 | 01 | Phase 1 — Problem formulation | **Proposed — awaiting sign-off** | [01-phase1-proposal.md](01-phase1-proposal.md) · [questions archive](01-phase1-questions.md) |
 | — | Phase 0 — Foundations | Not started (soft prefs recorded in Phase 1 §8) | — |
 
+**Answer pack (all open questions in one file):** [`../QUESTIONS.md`](../QUESTIONS.md)
+
 Charter: [`../PROJECT_CHARTER.md`](../PROJECT_CHARTER.md)
