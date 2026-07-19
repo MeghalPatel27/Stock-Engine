@@ -1,0 +1,20 @@
+name: fw__base__panel
+version: v1
+family: other
+feature_type: raw
+owner: framework-tests
+description: Fixture base panel (no real formula — framework tests only)
+dtype: float
+unit: dimensionless
+dependencies:
+  - dataset:l1.equity_eod
+lookback_sessions: 1
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

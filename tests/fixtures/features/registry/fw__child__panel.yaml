@@ -1,0 +1,17 @@
+name: fw__child__panel
+version: v1
+family: other
+feature_type: derived
+owner: framework-tests
+description: Fixture child panel depending on fw__base__panel
+dtype: float
+dependencies:
+  - feature:fw__base__panel@v1
+lookback_sessions: 1
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: candidate
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
