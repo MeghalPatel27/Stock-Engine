@@ -1,0 +1,21 @@
+name: cs__zscore__trend__price_vs_ema__20
+version: v1
+family: cross_sectional
+feature_type: cross_sectional
+owner: stock-engine
+description: >
+  Cross-sectional z-score of trend__price_vs_ema__20 within session.
+dtype: float
+unit: dimensionless
+dependencies:
+  - feature:trend__price_vs_ema__20@v1
+lookback_sessions: 20
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

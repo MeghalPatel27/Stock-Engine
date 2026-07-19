@@ -9,4 +9,4 @@
 | 04 | Phase 3 — Cleaning & CA | Finalized + cleaning **APPROVED** | [04-phase3.md](04-phase3.md) · [review](04-cleaning-review.md) |
 | 05 | Feature registry & feature store | **Finalized + framework APPROVED** | [05-feature-registry.md](05-feature-registry.md) |
 
-**Current gate:** Land first feature `raw__close_adj__l1` E2E. No RSI/MACD until that path is proven.
+**Current gate:** Feature backlog (25) on `main`. Next: **Label Generation ADR**.

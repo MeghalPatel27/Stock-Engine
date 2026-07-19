@@ -1,0 +1,21 @@
+name: trend__slope__ema20__5d
+version: v1
+family: trend
+feature_type: derived
+owner: stock-engine
+description: >
+  EMA20[T] / EMA20[T-5] - 1.
+dtype: float
+unit: return
+dependencies:
+  - feature:trend__ema__20@v1
+lookback_sessions: 25
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

@@ -1,0 +1,21 @@
+name: mom__ret__60d
+version: v1
+family: momentum
+feature_type: rolling
+owner: stock-engine
+description: >
+  Sixty-trading-session simple return of adjusted close: close[T]/close[T-60]-1.
+dtype: float
+unit: return
+dependencies:
+  - feature:raw__close_adj__l1@v1
+lookback_sessions: 60
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

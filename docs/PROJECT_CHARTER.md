@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** Momentum returns `1d`/`5d`/`20d` on `main` path.
+**Status:** V1 planned feature backlog implemented (25 features). Next: labels ADR.
 
 ## Progress
 
@@ -14,19 +14,16 @@
 | Phase 3 Cleaning & normalization | ✅ APPROVED |
 | ADR-05 Feature registry & store design | ✅ Finalized |
 | **Feature framework** (registry / DAG / store / publisher) | ✅ APPROVED (+ follow-ups) |
-| Feature — `raw__close_adj__l1` | ✅ |
-| Feature — `mom__ret__1d` | ✅ |
-| Feature — `mom__ret__5d` | ✅ |
-| Feature — `mom__ret__20d` | ✅ (this PR) |
-| Trend / vol / liq families | ⛔ next |
+| Feature backlog (raw/mom/trend/vol/liq/cs) | ✅ 25 features |
+| Label Generation ADR | ⏭️ next |
 | Labels → models → backtest → serve | ⛔ blocked |
 
 ## Hard stop
 
-Do not implement RSI/MACD until a trivial **raw** feature has passed end-to-end through the framework.
+Do not implement RSI/MACD yet. Next architecture gate is **Label Generation ADR**.
 
 ## Next
 
-1. Land `raw__close_adj__l1` E2E  
-2. Simple return / rolling features by family  
-3. Label Generation ADR
+1. Review / promote features (experimental → candidate → production)  
+2. Label Generation ADR  
+3. Labels → modeling ADR

@@ -1,6 +1,6 @@
 # Stock Intelligence Engine
 
-**Status:** Building `mom__ret__20d` (20-session return). Not RSI/MACD yet.
+**Status:** V1 planned features implemented (25). Next: Label Generation ADR.
 
 ## Docs
 
@@ -14,7 +14,7 @@
 
 ## Current gate
 
-Ship `mom__ret__20d`, then move to trend / volatility families.
+Review feature set, then **Label Generation ADR**.
 
 ## Quickstart
 

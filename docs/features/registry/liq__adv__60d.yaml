@@ -1,0 +1,22 @@
+name: liq__adv__60d
+version: v1
+family: liquidity
+feature_type: rolling
+owner: stock-engine
+description: >
+  60-session average of raw__traded_value__l1 (INR ADV).
+dtype: float
+unit: INR
+dependencies:
+  - feature:raw__traded_value__l1@v1
+lookback_sessions: 60
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  min_value: 0.0
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental
