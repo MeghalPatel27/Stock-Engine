@@ -1,6 +1,6 @@
 # Stock Intelligence Engine
 
-**Status:** ADR-06 finalized. H=5 **label pipeline** implemented — E2E review next. No model training yet.
+**Status:** H=5 labels E2E **APPROVED**. [Modeling ADR proposal](docs/decisions/07-phase-modeling-proposal.md) next (docs only — no training yet).
 
 ## Docs
 
@@ -9,11 +9,11 @@
 - [Labels](docs/labels/README.md)
 - [Feature backlog](docs/features/FEATURE_BACKLOG.md)
 - [Pilot 5 stocks](docs/data/pilot_5_stocks/README.md)
-- [ADR-06 review packet](docs/reviews/adr06-label-pipeline-review-packet.md)
+- [Modeling ADR proposal](docs/decisions/07-phase-modeling-proposal.md)
 
 ## Current gate
 
-Complete [label E2E review](docs/reviews/adr06-label-pipeline-review-packet.md), then **Modeling ADR**.
+Review and sign off the **Modeling ADR**. Do not implement training until it is Finalized.
 
 ## Quickstart
 
