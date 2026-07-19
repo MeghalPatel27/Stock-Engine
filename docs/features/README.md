@@ -1,5 +1,7 @@
 # Features
 
+**Backlog (done + planned):** [FEATURE_BACKLOG.md](FEATURE_BACKLOG.md)
+
 ## Layout
 
 ```text
