@@ -173,7 +173,11 @@ def build_calendar(equity: pd.DataFrame) -> pd.DataFrame:
     """
     open_dates = sorted({date.fromisoformat(d) for d in equity["session_date"]})
     rows = [
-        {"session_date": d.isoformat(), "is_open": True, "source": "derived_from_reliance_quotes"}
+        {
+            "session_date": d.isoformat(),
+            "is_open": "true",
+            "source": "derived_from_reliance_quotes",
+        }
         for d in open_dates
     ]
     open_set = {d.isoformat() for d in open_dates}
@@ -182,7 +186,7 @@ def build_calendar(equity: pd.DataFrame) -> pd.DataFrame:
             rows.append(
                 {
                     "session_date": h,
-                    "is_open": False,
+                    "is_open": "false",
                     "source": "nse_holidays_2026_user",
                 }
             )
