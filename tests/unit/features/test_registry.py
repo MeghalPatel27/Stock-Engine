@@ -34,14 +34,17 @@ def test_load_fixture_registry() -> None:
     assert "l1.equity_eod" in registry.datasets
 
 
-def test_repo_registry_empty_is_valid() -> None:
+def test_repo_registry_loads_raw_close_adj() -> None:
     root = Path(__file__).resolve().parents[3]
     registry = load_registry(
         root / "docs" / "features" / "registry",
         root / "docs" / "features" / "families.yaml",
         datasets_path=root / "docs" / "features" / "datasets.yaml",
     )
-    assert len(registry) == 0
+    assert "raw__close_adj__l1@v1" in registry
+    spec = registry.get("raw__close_adj__l1", "v1")
+    assert spec.feature_type == "raw"
+    assert spec.dataset_deps() == ["l1.equity_eod"]
     assert registry.family_ids
     assert registry.datasets is not None
     assert len(registry.datasets) >= 1

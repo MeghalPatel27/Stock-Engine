@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
 **Last updated:** 2026-07-19  
-**Status:** ADR-05 framework **APPROVED** (with follow-ups implemented). Next: first raw projection feature after merge.
+**Status:** Feature framework on `main`. Implementing first raw feature (`raw__close_adj__l1`).
 
 ## Progress
 
@@ -14,7 +14,8 @@
 | Phase 3 Cleaning & normalization | ✅ APPROVED |
 | ADR-05 Feature registry & store design | ✅ Finalized |
 | **Feature framework** (registry / DAG / store / publisher) | ✅ APPROVED (+ follow-ups) |
-| Feature implementation (raw projection first, then families) | ⏭️ after PR merge |
+| Feature implementation — `raw__close_adj__l1` | ⏭️ in progress |
+| Feature families (returns / trend / vol / liq) | ⛔ after first raw E2E |
 | Labels → models → backtest → serve | ⛔ blocked |
 
 ## Hard stop
@@ -23,7 +24,6 @@ Do not implement RSI/MACD until a trivial **raw** feature has passed end-to-end 
 
 ## Next
 
-1. Merge PR #4  
-2. First `feature_type: raw` projection (e.g. adjusted close)  
-3. Simple return / rolling features by family  
-4. Label Generation ADR
+1. Land `raw__close_adj__l1` E2E  
+2. Simple return / rolling features by family  
+3. Label Generation ADR

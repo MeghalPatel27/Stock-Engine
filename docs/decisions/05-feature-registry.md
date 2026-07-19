@@ -262,8 +262,9 @@ Implement and review **framework only**:
 4. ✅ Phase 2 — Data Acquisition  
 5. ✅ Phase 3 — Cleaning & Normalization  
 6. ✅ ADR-05 — Feature Registry & Store Design  
-7. **→ Feature Framework Implementation** (registry, DAG, publishing, validation, storage)  
-8. Feature Implementation (Momentum, Trend, Volatility, Liquidity, …)  
+7. ✅ Feature Framework Implementation (registry, DAG, publishing, validation, storage)  
+8. **→ Feature Implementation** — start with `raw__close_adj__l1`, then Momentum / Trend / Vol / Liq  
+
 9. Label Generation ADR  
 10. Label implementation  
 11. Modeling ADR  

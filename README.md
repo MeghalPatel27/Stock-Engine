@@ -1,6 +1,6 @@
 # Stock Intelligence Engine
 
-**Status:** ADR-05 feature **framework approved**. Next after merge: first raw projection feature (not RSI/MACD).
+**Status:** Building first feature `raw__close_adj__l1` (raw L1 projection). Not RSI/MACD yet.
 
 ## Docs
 
@@ -14,13 +14,14 @@
 
 ## Current gate
 
-Merge the feature framework PR, then add the first `feature_type: raw` projection.
+Ship `raw__close_adj__l1` end-to-end (registry → compute → publish).
 
 ## Quickstart
 
 ```bash
 uv sync --extra dev
 uv run stock-engine-ingest --as-of YYYY-MM-DD
+uv run stock-engine-publish-features --as-of YYYY-MM-DD
 uv run stock-engine-lint-features
 uv run pytest
 ```
