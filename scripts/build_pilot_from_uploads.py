@@ -216,7 +216,9 @@ def main() -> int:
         (PREPARED / src.name).write_bytes(src.read_bytes())
 
     counts = equity.groupby("symbol").size().to_dict()
-    print(f"equity_eod rows={len(equity)} range={equity.session_date.min()}→{equity.session_date.max()}")
+    start = equity.session_date.min()
+    end = equity.session_date.max()
+    print(f"equity_eod rows={len(equity)} range={start}→{end}")
     print(f"per_symbol={counts}")
     print(f"corporate_actions rows={len(ca)}")
     open_n = int((cal["is_open"].astype(str).str.lower() == "true").sum())
