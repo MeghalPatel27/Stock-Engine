@@ -2,22 +2,21 @@
 
 Daily post-close ranking of liquid Indian F&O equities by near-term cross-sectional outperformance probability.
 
-**Status:** Phase 0 scaffolded. Phase 1 + Phase 0 ADRs finalized. **Phase 2 data-acquisition design awaiting sign-off** — no ingestion implementation yet.
+**Status:** Phase 2 ingestion foundation on `main` (local CSV only). No features/labels/models yet. Next: architecture review, then Phase 3+ design.
 
 ## Source of truth
 
 - [Project charter](docs/PROJECT_CHARTER.md)
-- [Decision records (ADRs)](docs/decisions/)
+- [ADRs](docs/decisions/)
+- [Incoming CSV guide](docs/data/incoming.md)
 
-## Current gate
-
-Sign off **Phase 2**: [`docs/decisions/03-phase2-proposal.md`](docs/decisions/03-phase2-proposal.md)
-
-## Dev quickstart (local)
+## Dev quickstart
 
 ```bash
 uv sync --extra dev
+uv run python scripts/bootstrap.py
+# Drop equity_eod.csv + corporate_actions.csv into data/incoming/
+uv run stock-engine-ingest
 uv run pytest
 uv run ruff check src tests scripts
-uv run python scripts/bootstrap.py
 ```

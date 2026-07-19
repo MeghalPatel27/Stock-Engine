@@ -14,7 +14,7 @@ from stock_engine.config import load_config_with_hash  # noqa: E402
 
 def main() -> int:
     data_root = ROOT / "data"
-    for name in ("raw", "clean", "features", "metadata"):
+    for name in ("raw", "clean", "features", "metadata", "incoming"):
         (data_root / name).mkdir(parents=True, exist_ok=True)
         keep = data_root / name / ".gitkeep"
         if not keep.exists():

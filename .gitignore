@@ -34,3 +34,6 @@ data/metadata/**
 .idea/
 .vscode/
 *.swp
+
+data/incoming/**
+!data/incoming/.gitkeep

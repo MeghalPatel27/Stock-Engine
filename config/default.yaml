@@ -16,3 +16,7 @@ output:
 
 paths:
   data_root: data
+
+ingest:
+  row_count_deviation: 0.5
+  provider: local_csv
