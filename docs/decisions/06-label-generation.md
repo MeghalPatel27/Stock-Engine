@@ -24,6 +24,7 @@ Also locked from review recommendations: `sample_weight` (default 1.0), `label_s
 | Forward return | `CloseAdj(T+H)/CloseAdj(T)-1` on trading calendar |
 | Primary horizon | H=5 |
 | Selection policy | Configurable; default `floor` |
+| Tie-break | Bullish: `(R desc, isin asc)`; bearish: `(R asc, isin asc)` |
 | Universe modes | `pilot` / `l1_intersection` / `phase1_filters` |
 | Store | `data/labels/{label_set}/{label_version}/horizon=H/as_of_date=...` |
 | Inference | Labels **never** on live path |
