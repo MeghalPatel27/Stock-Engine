@@ -24,16 +24,20 @@ data/raw/**
 data/clean/**
 data/features/**
 data/labels/**
+data/ranks/**
 data/models/**
 data/backtests/**
 data/metadata/**
-!data/backtests/.gitkeep
+data/incoming/**
 !data/raw/.gitkeep
 !data/clean/.gitkeep
 !data/features/.gitkeep
 !data/labels/.gitkeep
+!data/ranks/.gitkeep
 !data/models/.gitkeep
+!data/backtests/.gitkeep
 !data/metadata/.gitkeep
+!data/incoming/.gitkeep
 research/artifacts/**
 
 # OS / IDE
@@ -41,6 +45,3 @@ research/artifacts/**
 .idea/
 .vscode/
 *.swp
-
-data/incoming/**
-!data/incoming/.gitkeep

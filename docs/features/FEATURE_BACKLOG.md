@@ -118,9 +118,10 @@ Universe V1 = all ISINs present in the panel on session T (Phase-1 F&O filter wi
 2. ✅ Label Generation ADR + H=5 pipeline (E2E **APPROVED**)  
 3. ✅ Modeling ADR + PICK A  
 4. ✅ Backtesting ADR + real-data harness  
-5. Promote stable features `experimental` → `candidate` → `production`  
-6. Wire Phase-1 universe into CS features  
-7. Inference / Serving ADR
+5. ✅ Inference ADR + local RankRow publish  
+6. Promote stable features `experimental` → `candidate` → `production`  
+7. Wire Phase-1 universe into CS features  
+8. Live-trading ADR (brokers) — later
 
 ---
 
