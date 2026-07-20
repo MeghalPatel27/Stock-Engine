@@ -11,5 +11,6 @@
 | 06 | Label generation | **Finalized** + E2E **APPROVED** | [06-label-generation.md](06-label-generation.md) · [review](../reviews/adr06-label-pipeline-review-packet.md) |
 | 07 | Modeling | **Finalized** (PICK A) | [07-modeling.md](07-modeling.md) |
 | 08 | Backtesting | **Finalized** | [08-backtesting.md](08-backtesting.md) · [cost sources](../backtest/COST_SOURCES.md) |
+| 09 | Inference & Serving | **Finalized** (local publish) | [09-inference-serving.md](09-inference-serving.md) |
 
-**Current gate:** Review backtest harness (real pilot only). Next: Inference / Serving ADR.
+**Current gate:** Daily infer publish reviewed. No live brokers yet.

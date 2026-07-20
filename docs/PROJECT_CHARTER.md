@@ -1,7 +1,7 @@
 # Stock Intelligence Engine — Project Charter & Status
 
-**Last updated:** 2026-07-19  
-**Status:** ADR-08 Backtesting **Finalized**. Harness runs on published real pilot data.
+**Last updated:** 2026-07-20  
+**Status:** ADR-09 Inference & Serving **Finalized**. Daily rank publish implemented (local; no brokers).
 
 ## Progress
 
@@ -17,15 +17,16 @@
 | ADR-06 Label generation | ✅ E2E APPROVED |
 | ADR-07 Modeling | ✅ Finalized + PICK A |
 | ADR-08 Backtesting | ✅ Finalized + harness |
-| Inference / Serving ADR | ⏭️ next |
+| ADR-09 Inference & Serving | ✅ Finalized + local publish |
+| Production universe / live brokers | ⏭️ later |
 
 ## Hard stop
 
-Do not begin live serving until Inference/Serving ADR is signed off.  
-Pilot backtest metrics are **not** production benchmarks (5-name universe).
+No live broker orders until a future Live-Trading ADR.  
+Pilot metrics remain **not** production benchmarks.
 
 ## Next
 
-1. Review backtest harness + pilot metrics  
-2. Inference / Serving ADR  
-3. Production universe (`phase1_filters`) when membership tables land
+1. Review daily `stock-engine-infer` on pilot  
+2. Promote features + expand universe (`phase1_filters`)  
+3. Model quality iteration (still research/)
