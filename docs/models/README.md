@@ -20,10 +20,16 @@ uv run python research/experiments/run_per_stock_train.py --as-of 2026-07-17 --o
 Layout:
 
 ```text
-data/models/cs_quantile_h5_per_stock/v1/
+data/models/cs_quantile_h5_per_stock/v2/
   bundle_manifest.json
   metrics_per_stock.json
   by_isin/INE002A01018/...
+```
+
+**v2** adds RSI/MACD features (29 total vs 25 in v1). Republish features first:
+
+```bash
+uv run stock-engine-publish-features --as-of 2026-07-17
 ```
 
 ## Score / infer

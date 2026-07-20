@@ -1,0 +1,21 @@
+name: trend__macd__12_26_9
+version: v1
+family: trend
+feature_type: rolling
+owner: stock-engine
+description: >
+  MACD line: EMA(12) - EMA(26) of raw__close_adj__l1 (adjust=False).
+dtype: float
+unit: INR
+dependencies:
+  - feature:raw__close_adj__l1@v1
+lookback_sessions: 26
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

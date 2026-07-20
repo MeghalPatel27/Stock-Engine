@@ -44,7 +44,7 @@ def test_registry_matches_computers() -> None:
     registry = _registry()
     reg_ids = {f.feature_id for f in registry.all()}
     assert reg_ids == set(FEATURE_COMPUTERS)
-    assert len(FEATURE_COMPUTERS) == 25
+    assert len(FEATURE_COMPUTERS) == 29
 
 
 def test_trend_price_vs_ema() -> None:
@@ -128,4 +128,4 @@ def test_e2e_publish_all_features(tmp_path: Path) -> None:
         repo_root=REPO,
     )
     assert result.status == "success", result.errors
-    assert len(result.feature_ids) == 25
+    assert len(result.feature_ids) == 29
