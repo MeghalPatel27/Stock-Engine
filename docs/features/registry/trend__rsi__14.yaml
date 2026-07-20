@@ -1,0 +1,21 @@
+name: trend__rsi__14
+version: v1
+family: trend
+feature_type: rolling
+owner: stock-engine
+description: >
+  Wilder RSI(14) on raw__close_adj__l1 (0–100 scale).
+dtype: float
+unit: index
+dependencies:
+  - feature:raw__close_adj__l1@v1
+lookback_sessions: 14
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

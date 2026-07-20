@@ -15,6 +15,12 @@ from stock_engine.features.compute.cs import (
     compute_cs_zscore_trend_price_vs_ema_20,
     compute_cs_zscore_vol_std_20d,
 )
+from stock_engine.features.compute.indicators import (
+    compute_trend_macd_12_26_9,
+    compute_trend_macd_hist_12_26_9,
+    compute_trend_macd_signal_12_26_9,
+    compute_trend_rsi_14,
+)
 from stock_engine.features.compute.liq import compute_liq_adv_20d, compute_liq_adv_60d
 from stock_engine.features.compute.mom_ret import (
     compute_mom_ret_1d,
@@ -58,6 +64,10 @@ FEATURE_COMPUTERS: dict[str, FeatureComputer] = {
     "trend__price_vs_ema__20@v1": compute_trend_price_vs_ema_20,
     "trend__ema_spread__10_50@v1": compute_trend_ema_spread_10_50,
     "trend__slope__ema20__5d@v1": compute_trend_slope_ema20_5d,
+    "trend__rsi__14@v1": compute_trend_rsi_14,
+    "trend__macd__12_26_9@v1": compute_trend_macd_12_26_9,
+    "trend__macd_signal__12_26_9@v1": compute_trend_macd_signal_12_26_9,
+    "trend__macd_hist__12_26_9@v1": compute_trend_macd_hist_12_26_9,
     "vol__std__20d@v1": compute_vol_std_20d,
     "vol__std__60d@v1": compute_vol_std_60d,
     "liq__adv__20d@v1": compute_liq_adv_20d,

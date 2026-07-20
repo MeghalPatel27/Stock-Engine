@@ -1,0 +1,21 @@
+name: trend__macd_signal__12_26_9
+version: v1
+family: trend
+feature_type: derived
+owner: stock-engine
+description: >
+  MACD signal line: EMA(9) of trend__macd__12_26_9.
+dtype: float
+unit: INR
+dependencies:
+  - feature:trend__macd__12_26_9@v1
+lookback_sessions: 35
+pit_rule: asof_session_close
+null_policy: propagate
+lifecycle: experimental
+validation:
+  finite: true
+  allow_null: true
+recomputable: true
+computational_cost: low
+stability: experimental

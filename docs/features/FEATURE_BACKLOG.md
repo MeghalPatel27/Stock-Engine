@@ -42,6 +42,10 @@ Naming: `{domain}__{metric}__{params}` · windows in **trading sessions**.
 | `trend__price_vs_ema__20@v1` | derived | ✅ | `close / ema20 - 1` |
 | `trend__ema_spread__10_50@v1` | composite | ✅ | `(ema10 - ema50) / ema50` |
 | `trend__slope__ema20__5d@v1` | derived | ✅ | `ema20[T]/ema20[T-5]-1` |
+| `trend__rsi__14@v1` | rolling | ✅ | Wilder RSI on `close_adj` |
+| `trend__macd__12_26_9@v1` | rolling | ✅ | EMA(12) − EMA(26) |
+| `trend__macd_signal__12_26_9@v1` | derived | ✅ | EMA(9) of MACD line |
+| `trend__macd_hist__12_26_9@v1` | derived | ✅ | MACD − signal |
 
 ---
 
@@ -105,7 +109,7 @@ Universe V1 = all ISINs present in the panel on session T (Phase-1 F&O filter wi
 
 | Idea | Why deferred |
 |---|---|
-| RSI / MACD / Stochastic / Bollinger | Complex; validate simple families first |
+| Stochastic / Bollinger | After RSI/MACD baseline validated |
 | ML-generated features | After labels + modeling ADR |
 | Intraday / tick features | V1 is daily post-close |
 | Alternative data | Out of V1 scope |
@@ -114,7 +118,7 @@ Universe V1 = all ISINs present in the panel on session T (Phase-1 F&O filter wi
 
 ## Suggested next steps
 
-1. ✅ Planned backlog (25 features) implemented  
+1. ✅ Planned backlog (29 features) implemented  
 2. ✅ Label Generation ADR + H=5 pipeline (E2E **APPROVED**)  
 3. ✅ Modeling ADR + PICK A  
 4. ✅ Backtesting ADR + real-data harness  
@@ -125,6 +129,6 @@ Universe V1 = all ISINs present in the panel on session T (Phase-1 F&O filter wi
 
 ---
 
-## Currently registered (25)
+## Currently registered (29)
 
 See `docs/features/registry/*.yaml` and `FEATURE_COMPUTERS` in `src/stock_engine/features/compute/__init__.py`.
