@@ -18,6 +18,7 @@
 | ADR-07 Modeling | ✅ Finalized + PICK A |
 | ADR-08 Backtesting | ✅ Finalized + harness |
 | ADR-09 Inference & Serving | ✅ Finalized + local publish |
+| Per-stock models (pilot) | ✅ Tuned one model per ISIN |
 | Production universe / live brokers | ⏭️ later |
 
 ## Hard stop

@@ -34,21 +34,25 @@ modeling:
   test_fold_sessions: 21
   step_sessions: 21
   top_k: 20
-  # Until features are promoted, research/paper may use experimental allow-list
+  # pooled | per_stock — pilot uses per_stock (one model per ISIN)
+  training_mode: per_stock
   require_production_features: false
-  model_name: cs_quantile_h5
+  model_name: cs_quantile_h5_per_stock
   model_version: v1
   feature_set: core
   feature_version: v1
   label_set: core
   label_version: v1
   random_seed: 42
-  # Conservative HGB defaults (research may override)
+  max_iter: 200
+  per_stock_tune: true
+  per_stock_step_sessions: 42
+  # Conservative HGB defaults (per-stock tune may override per ISIN)
   learning_rate: 0.05
   max_depth: 4
   max_leaf_nodes: 31
-  min_samples_leaf: 20
-  l2_regularization: 1.0
+  min_samples_leaf: 15
+  l2_regularization: 0.5
 
 # See docs/backtest/COST_SOURCES.md for statutory / exchange citations
 backtest:

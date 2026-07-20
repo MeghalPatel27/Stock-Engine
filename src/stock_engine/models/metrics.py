@@ -107,3 +107,53 @@ def evaluate_fold_predictions(
         "n_rows": float(len(pred)),
         "n_sessions": float(pred["session_date"].nunique()),
     }
+
+
+def evaluate_stock_series_predictions(pred: pd.DataFrame) -> dict[str, float]:
+    """
+    Time-series metrics for a single ISIN panel (no cross-sectional IC).
+    """
+    from sklearn.metrics import brier_score_loss, roc_auc_score
+
+    y_b = (
+        pred["y_bullish"].to_numpy(dtype=int)
+        if "y_bullish" in pred.columns
+        else (pred["label"] == "bullish").astype(int).to_numpy()
+    )
+    y_s = (
+        pred["y_bearish"].to_numpy(dtype=int)
+        if "y_bearish" in pred.columns
+        else (pred["label"] == "bearish").astype(int).to_numpy()
+    )
+    pb = pred["p_bullish"].to_numpy(dtype=float)
+    ps = pred["p_bearish"].to_numpy(dtype=float)
+
+    def _auc(y: np.ndarray, p: np.ndarray) -> float:
+        if len(np.unique(y)) < 2:
+            return float("nan")
+        try:
+            return float(roc_auc_score(y, p))
+        except ValueError:
+            return float("nan")
+
+    def _prec(y: np.ndarray, p: np.ndarray, thresh: float = 0.5) -> float:
+        mask = p >= thresh
+        if not bool(mask.any()):
+            return float("nan")
+        return float(y[mask].mean())
+
+    ret = pred["forward_return"].to_numpy(dtype=float)
+    corr_long = float(pd.Series(pb).corr(pd.Series(ret), method="spearman"))
+    corr_short = float(pd.Series(ps).corr(pd.Series(-ret), method="spearman"))
+
+    return {
+        "auc_bullish": _auc(y_b, pb),
+        "auc_bearish": _auc(y_s, ps),
+        "brier_bullish": float(brier_score_loss(y_b, pb)),
+        "brier_bearish": float(brier_score_loss(y_s, ps)),
+        "bullish_precision": _prec(y_b, pb),
+        "bearish_precision": _prec(y_s, ps),
+        "return_corr_long": corr_long,
+        "return_corr_short": corr_short,
+        "n_rows": float(len(pred)),
+    }

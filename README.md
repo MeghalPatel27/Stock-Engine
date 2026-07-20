@@ -24,7 +24,7 @@ uv sync --extra dev
 uv run stock-engine-ingest --as-of YYYY-MM-DD
 uv run stock-engine-publish-features --as-of YYYY-MM-DD
 uv run stock-engine-publish-labels --as-of YYYY-MM-DD --overwrite
-uv run python research/experiments/run_walkforward_train.py --as-of YYYY-MM-DD --overwrite
+uv run python research/experiments/run_per_stock_train.py --as-of YYYY-MM-DD --overwrite
 uv run stock-engine-infer --as-of YYYY-MM-DD --overwrite
 uv run stock-engine-backtest --as-of YYYY-MM-DD --out-dir data/backtests/run
 uv run pytest
